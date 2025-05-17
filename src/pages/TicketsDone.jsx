@@ -6,7 +6,7 @@ import Searchbar from "../components/ui/Searchbar";
 import ProtocolsContainer from "../components/protocol/ProtocolsContainer";
 import "../styles/index.css";
 
-export default function TicketsIncoming() {
+export default function TicketsDone() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [protocolsData, setProtocolsData] = useState([]);
@@ -36,7 +36,7 @@ export default function TicketsIncoming() {
         isRecall: false,
         address: "Warszawa, ul. Puławska 45",
         distance: "12km",
-        date: "",
+        date: "2.05.2025",
       },
       {
         company: "Green Energy",
@@ -48,7 +48,7 @@ export default function TicketsIncoming() {
         isRecall: false,
         address: "Kraków, ul. Zielona 7",
         distance: "256km",
-        date: "",
+        date: "2.05.2025",
       },
       {
         company: "AutoPro",
@@ -60,7 +60,7 @@ export default function TicketsIncoming() {
         isRecall: true,
         address: "Poznań, ul. Torowa 19",
         distance: "310km",
-        date: "",
+        date: "1.05.2025",
       },
       {
         company: "BuildSmart",
@@ -72,7 +72,31 @@ export default function TicketsIncoming() {
         isRecall: false,
         address: "Gdańsk, ul. Nadmorska 3",
         distance: "435km",
-        date: "",
+        date: "1.05.2025",
+      },
+      {
+        company: "SmartLight",
+        title: "Brak zasilania w module LED",
+        description:
+          "Po instalacji jednego z modułów nie świeci się żadna dioda.",
+        mobileNumber: "+48 700 555 333",
+        underWarranty: false,
+        isRecall: false,
+        address: "Łódź, ul. Elektryczna 1",
+        distance: "180km",
+        date: "2.05.2025",
+      },
+      {
+        company: "HydroMax",
+        title: "Wyciek z zaworu głównego",
+        description:
+          "Zawór główny przepuszcza wodę pod ciśnieniem – wymagana wymiana.",
+        mobileNumber: "+48 666 222 999",
+        underWarranty: true,
+        isRecall: false,
+        address: "Lublin, ul. Wodna 14",
+        distance: "90km",
+        date: "1.05.2025",
       },
     ]);
   }, []);
@@ -88,7 +112,7 @@ export default function TicketsIncoming() {
 
         <div className="grid grid-cols-1 justify-items-center mb-5">
           <div className="px-5 w-5/6">
-            <div className="mx-1 my-4 font-extrabold text-3xl">Zaplanowane</div>
+            <div className="mx-1 my-4 font-extrabold text-3xl">Zakończone</div>
             <Searchbar value={searchTerm} onChange={setSearchTerm} />
           </div>
         </div>

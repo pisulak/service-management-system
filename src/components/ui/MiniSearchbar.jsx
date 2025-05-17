@@ -2,8 +2,8 @@ import { SearchIcon } from "../icons/SearchIcon";
 
 export default function Searchbar({ value, onChange }) {
   return (
-    <div className="flex items-center bg-gray-300 rounded-xl px-4 py-2 w-full max-w-xl border border-gray-400">
-      <SearchIcon className="text-gray-400 mr-2" size={20} />
+    <div className="justify-self-center w-11/12 h-1/2 rounded-xl bg-gray-100 shadow-[inset_0px_0px_20px_0px_rgba(0,0,0,0.05)] flex items-center px-4">
+      <SearchIcon className="text-gray-500 mr-2" />
       <input
         type="text"
         placeholder="Wyszukaj..."

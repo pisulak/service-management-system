@@ -22,8 +22,8 @@ export default function SidebarMenu() {
       label: "Zgłoszenia",
       submenu: [
         { icon: Comming, label: "Przychodzące", href: "/ticketsIncoming" },
-        { icon: Planned, label: "Zaplanowane", href: "#" },
-        { icon: Done, label: "Zakończone", href: "#" },
+        { icon: Planned, label: "Zaplanowane", href: "/ticketsPlanned" },
+        { icon: Done, label: "Zakończone", href: "/ticketsDone" },
       ],
     },
     { icon: Storage, label: "Magazyn", href: "#" },

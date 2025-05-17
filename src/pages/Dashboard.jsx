@@ -5,7 +5,7 @@ import Topbar from "../components/menu/Topbar";
 import StatScreen from "../components/stats/StatScreen";
 import Today from "../components/protocol/Today";
 import Storage from "../components/storage/MiniStorage";
-import "./styles/index.css";
+import "../styles/index.css";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);

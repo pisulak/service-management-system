@@ -1,5 +1,5 @@
 import Filter from "../icons/Filter";
-import Searchbar from "../ui/Searchbar";
+import Searchbar from "../ui/MiniSearchbar";
 import SortingFilter from "../ui/SortingFilter";
 import Product from "../product/Product";
 import { useFilteredSortedData } from "../../hooks/useFilteredSortedData";

@@ -3,28 +3,28 @@ import Protocol from "./MiniProtocol";
 export default function Today() {
   const todayData = [
     {
-      company: "Nazwa firmy",
-      title: "Tytuł zgłoszenia",
+      company: "Tech Solutions",
+      title: "Awaria systemu alarmowego",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rutrum est in laoreet tincidunt.",
-      mobileNumber: "+48 123 123 123",
+        "Klient zgłosił problem z centralą alarmową. Występują fałszywe alarmy.",
+      mobileNumber: "+48 501 123 456",
       underWarranty: true,
       isRecall: false,
-      address: "Lublin, słoneczna 11",
-      distance: "264km",
-      date: "13.05.2025",
+      address: "Warszawa, ul. Puławska 45",
+      distance: "12km",
+      date: "19.05.2025",
     },
     {
-      company: "Nazwa firmy",
-      title: "Tytuł zgłoszenia",
+      company: "Green Energy",
+      title: "Przegląd instalacji fotowoltaicznej",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rutrum est in laoreet tincidunt.",
-      mobileNumber: "+48 123 123 123",
+        "Zgodnie z harmonogramem należy przeprowadzić coroczny przegląd techniczny.",
+      mobileNumber: "+48 600 987 123",
       underWarranty: false,
-      isRecall: true,
-      address: "Lublin, słoneczna 11",
-      distance: "264km",
-      date: "13.05.2025",
+      isRecall: false,
+      address: "Kraków, ul. Zielona 7",
+      distance: "256km",
+      date: "19.05.2025",
     },
   ];
 

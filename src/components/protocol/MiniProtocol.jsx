@@ -1,6 +1,6 @@
 import { CheckIconBox, CrossIconBox } from "../icons/Checkbox";
 
-export default function StatCard({
+export default function MiniProtocol({
   company,
   title,
   description,
@@ -11,10 +11,29 @@ export default function StatCard({
   distance,
   date,
 }) {
+  const isPlanned = Boolean(date);
+
+  const getDateColor = () => {
+    if (!date) return;
+    const today = new Date();
+    const [day, month, year] = date.split(".").map(Number);
+    const protocolDate = new Date(year, month - 1, day);
+
+    const diffTime = protocolDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) return "text-gray-400";
+    if (diffDays === 0) return "text-red-500";
+    if (diffDays <= 3) return "text-yellow-500";
+    return "text-green-500";
+  };
+
+  const dateColor = getDateColor();
+
   return (
     <div className="grid grid-cols-[8fr_5fr] items-center px-6 py-4 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">
       <h1 className="font-bold text-3xl">{company}</h1>
-      <div className="font-semibold text-right text-red-500">{date}</div>
+      <div className={`font-semibold text-right ${dateColor}`}>{date}</div>
       <h2 className="my-3 col-span-2 font-bold text-xl">{title}</h2>
       <div className="col-span-2 mx-4">
         <p className="font-extralight">{description}</p>
@@ -22,7 +41,7 @@ export default function StatCard({
           Telefon:{" "}
           <span className="underline text-blue-500">{mobileNumber}</span>
         </div>
-        <div className="mb-1">
+        <div className="mb-2">
           {underWarranty ? (
             <CheckIconBox label="Gwarancja" />
           ) : (
@@ -43,9 +62,9 @@ export default function StatCard({
       </div>
       <button
         className="px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl"
-        type="submit"
+        type="button"
       >
-        Zamknij zgłoszenie
+        {isPlanned ? "Zamknij zgłoszenie" : "Zaplanuj wizytę"}
       </button>
     </div>
   );
