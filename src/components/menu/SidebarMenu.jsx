@@ -26,7 +26,7 @@ export default function SidebarMenu() {
         { icon: Done, label: "Zakończone", href: "/ticketsDone" },
       ],
     },
-    { icon: Storage, label: "Magazyn", href: "#" },
+    { icon: Storage, label: "Magazyn", href: "/storage" },
     { icon: Clients, label: "Klienci", href: "#" },
   ];
 

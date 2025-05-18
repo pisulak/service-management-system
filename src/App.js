@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import TicketsIncoming from "./pages/TicketsIncoming";
 import TicketsPlanned from "./pages/TicketsPlanned";
 import TicketsDone from "./pages/TicketsDone";
+import Storage from "./pages/StorageView";
 
 function PrivateRoute({ children }) {
   const [loading, setLoading] = useState(true);
@@ -67,7 +68,6 @@ export default function App() {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/ticketsPlanned"
           element={
@@ -76,12 +76,20 @@ export default function App() {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/ticketsDone"
           element={
             <PrivateRoute>
               <TicketsDone />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/storage"
+          element={
+            <PrivateRoute>
+              <Storage />
             </PrivateRoute>
           }
         />
