@@ -10,21 +10,14 @@ export default function SortingFilter({ fields, onSortChange }) {
         const isActive = sortKey === key;
         const alignment =
           key === "code" || key === "product" || key === "description"
-            ? "text-left"
-            : "justify-end text-right";
-
-        const colSpan =
-          key === "description"
-            ? "col-span-3"
-            : key === "product"
-            ? "col-span-2"
-            : "col-span-1";
+            ? "col-span-2 text-left"
+            : "col-span-1 justify-end text-right";
 
         return (
           <button
             key={key}
             onClick={() => toggleSort(key)}
-            className={`flex items-center gap-2 text-sm hover:underline ${alignment} ${colSpan}`}
+            className={`flex items-center gap-2 text-sm hover:underline ${alignment}`}
           >
             <span className="truncate overflow-hidden whitespace-nowrap">
               {label}

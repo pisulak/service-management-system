@@ -14,6 +14,7 @@ import TicketsIncoming from "./pages/TicketsIncoming";
 import TicketsPlanned from "./pages/TicketsPlanned";
 import TicketsDone from "./pages/TicketsDone";
 import Storage from "./pages/StorageView";
+import Clients from "./pages/ClientsView";
 
 function PrivateRoute({ children }) {
   const [loading, setLoading] = useState(true);
@@ -90,6 +91,15 @@ export default function App() {
           element={
             <PrivateRoute>
               <Storage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/clients"
+          element={
+            <PrivateRoute>
+              <Clients />
             </PrivateRoute>
           }
         />

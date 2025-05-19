@@ -27,7 +27,7 @@ export default function SidebarMenu() {
       ],
     },
     { icon: Storage, label: "Magazyn", href: "/storage" },
-    { icon: Clients, label: "Klienci", href: "#" },
+    { icon: Clients, label: "Klienci", href: "/clients" },
   ];
 
   useEffect(() => {

@@ -1,9 +1,4 @@
 import { CalendarArrowDown, CalendarArrowUp } from "lucide-react";
 
-export function CalArrowDown() {
-  return <CalendarArrowDown />;
-}
-
-export function CalArrowUp() {
-  return <CalendarArrowUp />;
-}
+export const CalArrowDown = (props) => <CalendarArrowDown {...props} />;
+export const CalArrowUp = (props) => <CalendarArrowUp {...props} />;

@@ -18,9 +18,9 @@ export default function Product({
         isEven ? "bg-white" : "bg-gray-200"
       }`}
     >
-      <span className="text-left">{code}</span>
+      <span className="text-left col-span-2">{code}</span>
       <span className="text-left col-span-2">{product}</span>
-      <span className="text-left col-span-3 truncate overflow-hidden whitespace-nowrap">
+      <span className="text-left col-span-2 truncate overflow-hidden whitespace-nowrap">
         {description}
       </span>
       <span>{length} mm</span>

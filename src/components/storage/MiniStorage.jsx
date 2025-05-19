@@ -93,7 +93,7 @@ export default function MiniStorage() {
         }}
       />
 
-      <div className="h-[calc(6*56px)] overflow-y-auto scroll-smooth border-b border-gray-300">
+      <div className="h-[calc(6*62px)] overflow-y-auto scroll-smooth border-b border-gray-300">
         {filteredData.map((item, index) => (
           <Product
             key={index}

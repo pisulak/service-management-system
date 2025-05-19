@@ -1,6 +1,6 @@
 import Filter from "../icons/Filter";
 import Searchbar from "../ui/MiniSearchbar";
-import SortingFilter from "../ui/SortingFilter";
+import SortingFilter from "../ui/StorageSortingFilter";
 import Product from "../product/Product";
 import { useFilteredSortedData } from "../../hooks/useFilteredSortedData";
 
