@@ -15,7 +15,7 @@ export default function AuthForm({
 }) {
   return (
     <div className="max-w-xs px-5 py-10 text-center rounded-[30px] bg-white shadow-[0px_0px_20px_0px_rgba(0,0,0,0.2)]">
-      <h1 className="text-3xl font-bold">{title}</h1>
+      <h1 className="mb-4 text-3xl font-bold">{title}</h1>
 
       <form onSubmit={onSubmit}>
         <input
@@ -38,7 +38,7 @@ export default function AuthForm({
         <br />
 
         <button
-          className="mb-5 px-5 py-1.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl"
+          className="mb-8 px-5 py-1.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700"
           type="submit"
         >
           {buttonLabel}
@@ -52,10 +52,10 @@ export default function AuthForm({
         <p>
           {footerText}
           <span
-            className="text-blue-500 cursor-pointer"
+            className="ml-1 text-blue-500 cursor-pointer hover:underline hover:text-blue-700"
             onClick={onFooterClick}
           >
-            {title === "Login" ? " Zarejestruj się!" : " Zaloguj się!"}
+            {title === "Login" ? "Zarejestruj się!" : "Zaloguj się!"}
           </span>
         </p>
       )}

@@ -21,7 +21,9 @@ export default function Client({ index, company, date, tickets, priority }) {
       <a
         href="#"
         className={`justify-self-end w-fit px-7 py-1 rounded-xl cursor-pointer ${
-          isEven ? "bg-blue-200 text-blue-900" : "bg-yellow-100 text-yellow-900"
+          isEven
+            ? "bg-blue-100 text-blue-800 hover:bg-blue-200 hover:text-blue-900"
+            : "bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900"
         }`}
       >
         Zlecenia

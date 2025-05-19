@@ -69,7 +69,7 @@ export default function Protocol({
       </div>
 
       <button
-        className="px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl"
+        className="px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700"
         type="button"
       >
         {(() => {

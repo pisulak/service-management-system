@@ -38,7 +38,7 @@ export default function Topbar() {
       <div
         onClick={() => setIsOpen(!isOpen)}
         ref={dropdownRef}
-        className="flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer hover:underline"
       >
         Nazwa Firmy
         <span className="ml-6 p-2 border border-gray-400 rounded-full">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Dashboard,
   Protocol,
@@ -65,8 +66,16 @@ export default function SidebarMenu() {
                   className="grid grid-cols-[1fr_8fr_1fr] items-center cursor-pointer"
                 >
                   <Icon />
-                  <span className="pl-2 select-none">{item.label}</span>
-                  {openIndex === i ? <ArrowUp /> : <ArrowDown />}
+                  <span className="pl-2 select-none hover:underline">
+                    {item.label}
+                  </span>
+                  <div
+                    className={`transition-transform duration-300 transform ${
+                      openIndex === i ? "rotate-180" : "rotate-0"
+                    }`}
+                  >
+                    {openIndex === i ? <ArrowUp /> : <ArrowDown />}
+                  </div>
                 </div>
               ) : (
                 <div>
@@ -74,7 +83,7 @@ export default function SidebarMenu() {
                     href={item.href}
                     className={`grid grid-cols-[1fr_8fr_1fr] items-center cursor-pointer ${
                       isActive ? "text-blue-500 font-bold" : "text-black"
-                    }`}
+                    } hover:underline hover:text-blue-700`}
                   >
                     <Icon />
                     <span className="pl-2 select-none">{item.label}</span>
@@ -82,30 +91,55 @@ export default function SidebarMenu() {
                 </div>
               )}
 
-              {hasSubmenu && openIndex === i && (
-                <ul className="grid justify-items-center ml-4 my-4 border-l-2 border-gray-300">
-                  {item.submenu.map((sub, j) => {
-                    const isSubActive = location.pathname.startsWith(sub.href);
-                    const IconSub = sub.icon;
+              <AnimatePresence initial={false}>
+                {hasSubmenu && openIndex === i && (
+                  <motion.ul
+                    className="grid justify-items-center ml-4 mt-4 border-l-2 border-gray-300 overflow-hidden"
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    {item.submenu.map((sub, j) => {
+                      const isSubActive = location.pathname.startsWith(
+                        sub.href
+                      );
+                      const IconSub = sub.icon;
 
-                    return (
-                      <li key={j} className="w-full my-1.5 pl-3 pr-8">
-                        <a
-                          href={sub.href}
-                          className={`grid grid-cols-[1fr_6fr] text-left items-center ${
-                            isSubActive
-                              ? "text-blue-500 font-bold"
-                              : "text-black"
-                          }`}
+                      return (
+                        <motion.li
+                          key={j}
+                          className="w-full my-1.5 pl-3 pr-8"
+                          initial={{ y: -10, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          exit={{ y: -10, opacity: 0 }}
+                          transition={{
+                            duration: 0.4,
+                            delay:
+                              openIndex === i
+                                ? j * 0.1
+                                : Math.abs(0.3 - j * 0.1),
+                          }}
                         >
-                          <IconSub />
-                          <span className="pl-2 select-none">{sub.label}</span>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
+                          <a
+                            href={sub.href}
+                            className={`grid grid-cols-[1fr_6fr] text-left items-center ${
+                              isSubActive
+                                ? "text-blue-500 font-bold"
+                                : "text-black"
+                            } hover:underline hover:text-blue-700`}
+                          >
+                            <IconSub />
+                            <span className="pl-2 select-none">
+                              {sub.label}
+                            </span>
+                          </a>
+                        </motion.li>
+                      );
+                    })}
+                  </motion.ul>
+                )}
+              </AnimatePresence>
             </li>
           );
         })}
