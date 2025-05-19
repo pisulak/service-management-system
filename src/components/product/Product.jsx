@@ -28,7 +28,9 @@ export default function Product({
       <span>{height} mm</span>
       <span>{weight} kg</span>
       <span>{price} zł</span>
-      <span>{quantity} szt.</span>
+      <span className={`${quantity ? "" : "text-red-500"}`}>
+        {quantity} szt.
+      </span>
     </div>
   );
 }

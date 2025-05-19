@@ -40,7 +40,7 @@ const initialData = [
     code: "21-1234-1005",
     product: "Piła tarczowa",
     price: 339.9,
-    quantity: 40,
+    quantity: 0,
   },
   {
     code: "21-1234-1006",

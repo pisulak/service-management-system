@@ -13,7 +13,9 @@ export default function MiniProduct({ index, code, product, price, quantity }) {
       </span>
       <span className="text-base text-right">{price} zł</span>
       <span className="text-base text-right">
-        <span className="font-medium">{quantity} szt.</span>
+        <span className={`font-medium ${quantity ? "" : "text-red-500"}`}>
+          {quantity} szt.
+        </span>
       </span>
     </div>
   );

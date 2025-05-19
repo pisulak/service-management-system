@@ -70,7 +70,7 @@ const initialData = [
     height: 220,
     weight: 4.1,
     price: 339.9,
-    quantity: 40,
+    quantity: 0,
   },
   {
     code: "21-1234-1006",
