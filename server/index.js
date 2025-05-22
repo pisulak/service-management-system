@@ -4,7 +4,7 @@ const cors = require("cors");
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
 const pool = require("./db");
-const authRoutes = require("./auth");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 const PORT = 5010;
@@ -32,6 +32,7 @@ app.use(
   })
 );
 
+// Endpointy API
 app.use("/api", authRoutes);
 
 app.listen(PORT, () => {
