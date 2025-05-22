@@ -4,7 +4,6 @@ import SidebarMenu from "../../components/menu/SidebarMenu";
 import Topbar from "../../components/menu/Topbar";
 import StatScreen from "../../components/stats/StatScreen";
 import Today from "../../components/protocol/Today";
-import "../../styles/index.css";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
