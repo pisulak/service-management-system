@@ -19,6 +19,10 @@ import Storage from "../features/admin/storage/StoragePage.jsx";
 import Clients from "../features/admin/clients/ClientsPage.jsx";
 
 // Client pages
+import ClientDashboard from "../features/client/dashboard/ClientDashboardPage.jsx";
+import ClientIncomingProtocols from "../features/client/protocols/ClientIncomingProtocols.jsx";
+import ClientPlannedProtocols from "../features/client/protocols/ClientPlannedProtocols.jsx";
+import ClientDoneProtocols from "../features/client/protocols/ClientDoneProtocols.jsx";
 
 function PrivateRoute({ children }) {
   const [loading, setLoading] = useState(true);
@@ -56,6 +60,8 @@ export default function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Chronione trasy */}
+
+        {/* Admin */}
         <Route
           path="/dashboard"
           element={
@@ -104,6 +110,41 @@ export default function App() {
           element={
             <PrivateRoute>
               <Clients />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Client */}
+        <Route
+          path="/clientDashboard"
+          element={
+            <PrivateRoute>
+              <ClientDashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/clientIncomingProtocols"
+          element={
+            <PrivateRoute>
+              <ClientIncomingProtocols />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/clientPlannedProtocols"
+          element={
+            <PrivateRoute>
+              <ClientPlannedProtocols />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/clientDoneProtocols"
+          element={
+            <PrivateRoute>
+              <ClientDoneProtocols />
             </PrivateRoute>
           }
         />

@@ -7,28 +7,32 @@ import {
   Comming,
   Planned,
   Done,
-  Storage,
-  Clients,
-} from "../icons/MenuIcons";
-import { ArrowDown, ArrowUp } from "../icons/ArrowIcons";
+} from "../../../components/icons/MenuIcons.jsx";
+import { ArrowDown, ArrowUp } from "../../../components/icons/ArrowIcons.jsx";
 
 export default function SidebarMenu() {
   const location = useLocation();
   const [openIndex, setOpenIndex] = useState(null);
 
   const menuItems = [
-    { icon: Dashboard, label: "Panel główny", href: "/dashboard" },
+    { icon: Dashboard, label: "Panel główny", href: "/clientDashboard" },
     {
       icon: Protocol,
       label: "Zgłoszenia",
       submenu: [
-        { icon: Comming, label: "Przychodzące", href: "/ticketsIncoming" },
-        { icon: Planned, label: "Zaplanowane", href: "/ticketsPlanned" },
-        { icon: Done, label: "Zakończone", href: "/ticketsDone" },
+        {
+          icon: Comming,
+          label: "Przychodzące",
+          href: "/clientIncomingProtocols",
+        },
+        {
+          icon: Planned,
+          label: "Zaplanowane",
+          href: "/clientPlannedProtocols",
+        },
+        { icon: Done, label: "Zakończone", href: "/clientDoneProtocols" },
       ],
     },
-    { icon: Storage, label: "Magazyn", href: "/storage" },
-    { icon: Clients, label: "Klienci", href: "/clients" },
   ];
 
   useEffect(() => {

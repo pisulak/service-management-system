@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SidebarMenu from "../../components/menu/SidebarMenu";
-import Topbar from "../../components/menu/Topbar";
-import StatScreen from "../../components/stats/StatScreen";
-import Today from "../../components/protocol/Today";
+import Sidebar from "../layout/ClientSidebar.jsx";
+import Topbar from "../../../components/layout/Topbar.jsx";
+import StatPanel from "./StatsPanel.jsx";
+import Today from "./TodayProtocols.jsx";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -25,11 +25,11 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <SidebarMenu />
+      <Sidebar />
 
       <div className="w-full">
         <Topbar />
-        <StatScreen />
+        <StatPanel />
 
         <div className="grid grid-cols-2 gap-12 mt-10 mx-16 font-extrabold text-3xl">
           <div className="mx-1">Na dzisiaj</div>
