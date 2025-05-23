@@ -1,7 +1,7 @@
-import Filter from "../../../components/icons/Filter.jsx";
+import Filter from "../../../components/icons/FilterIcons.jsx";
 import Searchbar from "../../../components/common/Searchbar.jsx";
 import SortingFilter from "../storage/MiniSortingFilter.jsx";
-import Product from "../storage/MiniProductItem.jsx";
+import ProductItem from "../storage/MiniProductItem.jsx";
 import { useFilteredSortedData } from "../../../hooks/useFilteredSortedData.js";
 
 const sortingFields = [
@@ -74,7 +74,7 @@ const initialData = [
   },
 ];
 
-export default function MiniStorage() {
+export default function StoragePanel() {
   const { searchTerm, setSearchTerm, setSortKey, setSortOrder, filteredData } =
     useFilteredSortedData(initialData);
 
@@ -95,7 +95,7 @@ export default function MiniStorage() {
 
       <div className="h-[calc(6*62px)] overflow-y-auto scroll-smooth border-b border-gray-300">
         {filteredData.map((item, index) => (
-          <Product
+          <ProductItem
             key={index}
             index={index}
             code={item.code}

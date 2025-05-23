@@ -2,7 +2,7 @@ import AuthForm from "./AuthForm";
 import { useRegister } from "../hooks/useRegister";
 import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+export default function RegisterPage() {
   const navigate = useNavigate();
   const {
     email,

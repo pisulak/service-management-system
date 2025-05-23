@@ -8,7 +8,7 @@ import {
 } from "../icons/MenuIcons";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { logoutUser } from "../../utils/auth";
-import { DropdownMenuList } from "./DropdownMenu.jsx";
+import { DropdownMenu } from "./DropdownMenu.jsx";
 
 export default function Topbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ export default function Topbar() {
       {isOpen && (
         <div className="absolute top-full right-10 z-50">
           <div className="px-7 py-6 bg-white shadow-md border rounded-xl">
-            <DropdownMenuList items={menuItems} onLogout={handleLogout} />
+            <DropdownMenu items={menuItems} onLogout={handleLogout} />
           </div>
         </div>
       )}

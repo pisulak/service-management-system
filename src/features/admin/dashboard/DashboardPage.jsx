@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../layout/AdminSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
-import StatScreen from "./StatsPanel.jsx";
-import Today from "./TodayProtocols.jsx";
-import Storage from "./StoragePanel.jsx";
+import StatPanel from "./StatsPanel.jsx";
+import TodayProtocols from "./TodayProtocols.jsx";
+import StoragePanel from "./StoragePanel.jsx";
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export default function Dashboard() {
 
       <div className="w-full">
         <Topbar />
-        <StatScreen />
+        <StatPanel />
 
         <div className="grid grid-cols-2 gap-12 mt-10 mx-16 font-extrabold text-3xl">
           <div className="mx-1">Na dzisiaj</div>
@@ -38,8 +38,8 @@ export default function Dashboard() {
         </div>
 
         <div className="h-[calc(100vh-420px)] grid grid-cols-2 gap-12 mx-11">
-          <Today />
-          <Storage />
+          <TodayProtocols />
+          <StoragePanel />
         </div>
       </div>
     </div>

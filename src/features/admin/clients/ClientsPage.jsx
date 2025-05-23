@@ -4,7 +4,7 @@ import Sidebar from "../layout/AdminSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
 import ClientList from "./ClientList.jsx";
 
-export default function ClientsView() {
+export default function ClientsPage() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 

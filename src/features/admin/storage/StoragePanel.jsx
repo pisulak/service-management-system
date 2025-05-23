@@ -1,7 +1,7 @@
-import Filter from "../../../components/icons/Filter";
+import Filter from "../../../components/icons/FilterIcons";
 import Searchbar from "../../../components/common/Searchbar";
 import SortingFilter from "./SortingFilter";
-import Product from "./ProductItem";
+import ProductItem from "./ProductItem";
 import { useFilteredSortedData } from "../../../hooks/useFilteredSortedData";
 
 const sortingFields = [
@@ -129,7 +129,7 @@ const initialData = [
   },
 ];
 
-export default function Storage() {
+export default function StoragePanel() {
   const { searchTerm, setSearchTerm, setSortKey, setSortOrder, filteredData } =
     useFilteredSortedData(initialData);
 
@@ -152,7 +152,7 @@ export default function Storage() {
 
       <div className="h-[600px] rounded-b-3xl overflow-y-auto scroll-smooth border-b border-gray-300">
         {filteredData.map((item, index) => (
-          <Product
+          <ProductItem
             key={index}
             index={index}
             code={item.code}

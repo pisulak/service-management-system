@@ -1,7 +1,7 @@
-import FilterIcon from "../../../components/icons/Filter.jsx";
+import FilterIcon from "../../../components/icons/FilterIcons.jsx";
 import Searchbar from "../../../components/common/Searchbar.jsx";
 import SortingFilter from "./SortingFilter.jsx";
-import Client from "./ClientItem.jsx";
+import ClientItem from "./ClientItem.jsx";
 import { useFilteredSortedData } from "../../../hooks/useFilteredSortedData.js";
 
 const sortingFields = [
@@ -86,7 +86,7 @@ const initialData = [
   },
 ];
 
-export default function Clients() {
+export default function ClientList() {
   const { searchTerm, setSearchTerm, setSortKey, setSortOrder, filteredData } =
     useFilteredSortedData(initialData);
 
@@ -109,7 +109,7 @@ export default function Clients() {
 
       <div className="h-[600px] rounded-b-3xl overflow-y-auto scroll-smooth border-b border-gray-300">
         {filteredData.map((item, index) => (
-          <Client
+          <ClientItem
             key={index}
             index={index}
             company={item.company}

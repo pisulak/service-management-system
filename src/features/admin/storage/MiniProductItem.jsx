@@ -1,4 +1,10 @@
-export default function MiniProduct({ index, code, product, price, quantity }) {
+export default function MiniProductItem({
+  index,
+  code,
+  product,
+  price,
+  quantity,
+}) {
   const isEven = index % 2 === 0;
 
   return (

@@ -1,6 +1,6 @@
-import StatCard from "../../../components/common/StatItem";
+import StatItem from "../../../components/common/StatItem";
 
-export default function StatScreen() {
+export default function StatsPanel() {
   const statsData = [
     {
       title: "Ilość klientów",
@@ -30,7 +30,7 @@ export default function StatScreen() {
       <div className="mx-1 my-4 font-extrabold text-3xl">Statystyki</div>
       <div className="grid grid-cols-3 gap-20">
         {statsData.map((item, index) => (
-          <StatCard
+          <StatItem
             key={index}
             title={item.title}
             value={item.value}

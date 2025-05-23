@@ -1,4 +1,4 @@
-export default function StatCard({ title, value, change, isPositive, imgSrc }) {
+export default function StatItem({ title, value, change, isPositive, imgSrc }) {
   return (
     <div className="grid grid-cols-[8fr_5fr] px-6 py-4 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">
       <p className="col-start-1 font-bold text-2xl">{title}</p>

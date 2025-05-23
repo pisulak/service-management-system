@@ -1,5 +1,11 @@
 import { Company } from "../../../components/icons/MenuIcons";
-export default function Client({ index, company, date, tickets, priority }) {
+export default function ClientItem({
+  index,
+  company,
+  date,
+  tickets,
+  priority,
+}) {
   const isEven = index % 2 === 0;
   const Logo = Company;
 

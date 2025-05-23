@@ -1,6 +1,6 @@
-import Protocol from "../../../components/common/MiniProtocolItem.jsx";
+import ProtocolItem from "../../../components/common/MiniProtocolItem.jsx";
 
-export default function Today() {
+export default function TodayProtocols() {
   const todayData = [
     {
       company: "Tech Solutions",
@@ -32,7 +32,7 @@ export default function Today() {
     <div className="overflow-y-auto scroll-smooth">
       <div className="grid grid-cols-1 gap-6 m-5">
         {todayData.map((item, index) => (
-          <Protocol
+          <ProtocolItem
             key={index}
             company={item.company}
             title={item.title}

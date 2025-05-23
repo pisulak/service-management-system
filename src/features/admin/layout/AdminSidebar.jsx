@@ -12,7 +12,7 @@ import {
 } from "../../../components/icons/MenuIcons.jsx";
 import { ArrowDown, ArrowUp } from "../../../components/icons/ArrowIcons.jsx";
 
-export default function SidebarMenu() {
+export default function AdminSidebar() {
   const location = useLocation();
   const [openIndex, setOpenIndex] = useState(null);
 

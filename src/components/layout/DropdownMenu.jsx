@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-export function DropdownMenuList({ items, onLogout }) {
+export function DropdownMenu({ items, onLogout }) {
   return (
     <AnimatePresence>
       <motion.ul

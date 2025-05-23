@@ -2,7 +2,7 @@ import AuthForm from "./AuthForm";
 import { useLogin } from "../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function LoginPage() {
   const navigate = useNavigate();
   const { email, setEmail, password, setPassword, error, handleLogin } =
     useLogin();

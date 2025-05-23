@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../layout/ClientSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
-import StatPanel from "./StatsPanel.jsx";
-import Today from "./TodayProtocols.jsx";
+import StatsPanel from "./StatsPanel.jsx";
+import TodayProtocols from "./TodayProtocols.jsx";
 
-export default function Dashboard() {
+export default function ClientDashboardPage() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
@@ -29,14 +29,14 @@ export default function Dashboard() {
 
       <div className="w-full">
         <Topbar />
-        <StatPanel />
+        <StatsPanel />
 
         <div className="grid grid-cols-2 gap-12 mt-10 mx-16 font-extrabold text-3xl">
           <div className="mx-1">Na dzisiaj</div>
         </div>
 
         <div className="mx-11">
-          <Today />
+          <TodayProtocols />
         </div>
       </div>
     </div>

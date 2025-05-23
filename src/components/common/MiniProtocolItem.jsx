@@ -1,6 +1,6 @@
-import { CheckIconBox, CrossIconBox } from "../icons/Checkbox";
+import { CheckIconBox, CrossIconBox } from "../icons/CheckboxIcons";
 
-export default function MiniProtocol({
+export default function MiniProtocolItem({
   company,
   title,
   description,

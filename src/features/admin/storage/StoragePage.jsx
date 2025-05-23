@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../layout/AdminSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
-import Storage from "./StoragePanel.jsx";
+import StoragePanel from "./StoragePanel.jsx";
 
-export default function StorageView() {
+export default function StoragePage() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export default function StorageView() {
 
         <div className="w-5/6">
           <div className="mx-6 my-4 font-extrabold text-3xl">Magazyn</div>
-          <Storage />
+          <StoragePanel />
         </div>
       </div>
     </div>

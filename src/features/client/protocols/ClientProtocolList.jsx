@@ -1,4 +1,4 @@
-import Protocol from "./ClientProtocolItem.jsx";
+import ClientProtocolItem from "./ClientProtocolItem.jsx";
 
 export default function ProtocolsContainer({ searchTerm, protocolsData }) {
   const filteredProtocols = protocolsData.filter((item) =>
@@ -11,7 +11,7 @@ export default function ProtocolsContainer({ searchTerm, protocolsData }) {
     <div className="w-5/6 h-full overflow-y-auto scroll-smooth">
       <div className="grid grid-cols-1 gap-6 m-5">
         {filteredProtocols.map((item, index) => (
-          <Protocol
+          <ClientProtocolItem
             key={index}
             company={item.company}
             title={item.title}

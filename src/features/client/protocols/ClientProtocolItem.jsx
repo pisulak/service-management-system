@@ -1,7 +1,10 @@
-import { CheckIconBox, CrossIconBox } from "../../../components/icons/Checkbox";
+import {
+  CheckIconBox,
+  CrossIconBox,
+} from "../../../components/icons/CheckboxIcons.jsx";
 import { getDiffDays } from "../../../utils/getDiffDays.js";
 
-export default function Protocol({
+export default function ClientProtocolItem({
   company,
   title,
   description,

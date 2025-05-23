@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../layout/AdminSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
 import Searchbar from "../../../components/common/ProtocolSearchbar.jsx";
-import ProtocolsContainer from "./ProtocolList.jsx";
+import ProtocolList from "./ProtocolList.jsx";
 import {
   CalArrowDown,
   CalArrowUp,
@@ -117,7 +117,7 @@ export default function PendingProtocols() {
         </div>
 
         <div className="grid grid-cols-1 justify-items-center h-[calc(100vh-200px)]">
-          <ProtocolsContainer
+          <ProtocolList
             searchTerm={searchTerm}
             protocolsData={sortedProtocols}
           />

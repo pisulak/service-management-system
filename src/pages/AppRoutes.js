@@ -50,7 +50,7 @@ function PrivateRoute({ children }) {
   return children;
 }
 
-export default function App() {
+export default function AppRoutes() {
   return (
     <Router>
       <Routes>

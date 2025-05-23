@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../layout/ClientSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
 import Searchbar from "../../../components/common/ProtocolSearchbar.jsx";
-import ProtocolsContainer from "./ClientProtocolList.jsx";
+import ClientProtocolList from "./ClientProtocolList.jsx";
 import {
   CalArrowDown,
   CalArrowUp,
@@ -117,7 +117,7 @@ export default function ClientSubmittedProtocols() {
         </div>
 
         <div className="grid grid-cols-1 justify-items-center h-[calc(100vh-200px)]">
-          <ProtocolsContainer
+          <ClientProtocolList
             searchTerm={searchTerm}
             protocolsData={sortedProtocols}
           />
