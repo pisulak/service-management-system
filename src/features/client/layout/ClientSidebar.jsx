@@ -9,6 +9,7 @@ import {
   Done,
 } from "../../../components/icons/MenuIcons.jsx";
 import { ArrowDown, ArrowUp } from "../../../components/icons/ArrowIcons.jsx";
+import { FilePlus } from "../../../components/icons/AddProtocolIcon.jsx";
 
 export default function ClientSidebar() {
   const location = useLocation();
@@ -33,6 +34,7 @@ export default function ClientSidebar() {
         { icon: Done, label: "Zrealizowane", href: "/clientClosedProtocols" },
       ],
     },
+    { icon: FilePlus, label: "Zgłoś awarię", href: "#" },
   ];
 
   useEffect(() => {

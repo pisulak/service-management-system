@@ -1,6 +1,9 @@
-import { CheckIconBox, CrossIconBox } from "../icons/CheckboxIcons";
+import {
+  CheckIconBox,
+  CrossIconBox,
+} from "../../../components/icons/CheckboxIcons";
 
-export default function MiniProtocolItem({
+export default function TodayProtocolItem({
   company,
   title,
   description,
@@ -61,7 +64,7 @@ export default function MiniProtocolItem({
         <span className="mx-4 font-extralight">{distance}</span>
       </div>
       <button
-        className="px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700"
+        className="px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
         type="button"
       >
         {isPlanned ? "Zamknij zgłoszenie" : "Zaplanuj wizytę"}

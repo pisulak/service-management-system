@@ -3,23 +3,9 @@ import StatItem from "../../../components/common/StatItem";
 export default function StatsPanel() {
   const statsData = [
     {
-      title: "Ilość klientów",
-      value: "54",
-      change: "+13,245%",
-      isPositive: true,
-      imgSrc: "",
-    },
-    {
       title: "Ilość zgłoszeń",
-      value: "485",
-      change: "-5,627%",
-      isPositive: false,
-      imgSrc: "",
-    },
-    {
-      title: "Przejechane km",
-      value: "4648",
-      change: "+1,985%",
+      value: "6",
+      change: "+5,627%",
       isPositive: true,
       imgSrc: "",
     },

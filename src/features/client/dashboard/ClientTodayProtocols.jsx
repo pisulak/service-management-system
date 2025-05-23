@@ -1,4 +1,4 @@
-import ProtocolItem from "../../../components/common/MiniProtocolItem.jsx";
+import ProtocolItem from "./ClientTodayProtocolItem.jsx";
 
 export default function TodayProtocols() {
   const todayData = [

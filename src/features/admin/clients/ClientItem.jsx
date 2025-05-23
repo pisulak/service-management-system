@@ -26,7 +26,7 @@ export default function ClientItem({
       <span>{priority}</span>
       <a
         href="#"
-        className={`justify-self-end w-fit px-7 py-1 rounded-xl cursor-pointer ${
+        className={`justify-self-end w-fit px-7 py-1 rounded-xl cursor-pointer hover:duration-300 ${
           isEven
             ? "bg-blue-100 text-blue-800 hover:bg-blue-200 hover:text-blue-900"
             : "bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900"
