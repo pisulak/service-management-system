@@ -1,4 +1,3 @@
-import Filter from "../../../components/icons/FilterIcons.jsx";
 import Searchbar from "../../../components/common/Searchbar.jsx";
 import SortingFilter from "../storage/MiniSortingFilter.jsx";
 import ProductItem from "../storage/MiniProductItem.jsx";
@@ -80,9 +79,8 @@ export default function StoragePanel() {
 
   return (
     <div className="h-[calc(100%-20px)] m-5 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">
-      <div className="grid grid-cols-[8fr_1fr] items-center h-20 border-b border-gray-400">
+      <div className="grid grid-cols-1 items-center h-20 border-b border-gray-400 pr-32">
         <Searchbar value={searchTerm} onChange={setSearchTerm} />
-        <Filter />
       </div>
 
       <SortingFilter

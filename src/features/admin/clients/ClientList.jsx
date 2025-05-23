@@ -1,4 +1,3 @@
-import FilterIcon from "../../../components/icons/FilterIcons.jsx";
 import Searchbar from "../../../components/common/Searchbar.jsx";
 import SortingFilter from "./SortingFilter.jsx";
 import ClientItem from "./ClientItem.jsx";
@@ -92,11 +91,8 @@ export default function ClientList() {
 
   return (
     <div className="m-5 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">
-      <div className="grid grid-cols-[5fr_3fr] items-center h-20 px-4 border-b border-gray-400">
+      <div className="grid grid-cols-1 items-center h-20 px-4 border-b border-gray-400 pr-96">
         <Searchbar value={searchTerm} onChange={setSearchTerm} />
-        <div className="flex justify-end mx-3">
-          <FilterIcon />
-        </div>
       </div>
 
       <SortingFilter
