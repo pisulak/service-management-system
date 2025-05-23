@@ -22,9 +22,9 @@ export default function SidebarMenu() {
       icon: Protocol,
       label: "Zgłoszenia",
       submenu: [
-        { icon: Comming, label: "Przychodzące", href: "/incomingProtocols" },
-        { icon: Planned, label: "Zaplanowane", href: "/plannedProtocols" },
-        { icon: Done, label: "Zakończone", href: "/doneProtocols" },
+        { icon: Comming, label: "Oczekujące", href: "/pendingProtocols" },
+        { icon: Planned, label: "Zaplanowane", href: "/scheduledProtocols" },
+        { icon: Done, label: "Zrealizowane", href: "/closedProtocols" },
       ],
     },
     { icon: Storage, label: "Magazyn", href: "/storage" },

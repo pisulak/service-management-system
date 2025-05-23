@@ -10,7 +10,7 @@ import {
 } from "../../../components/icons/CalendarIcons.jsx";
 import { sortProtocolsByDate } from "../../../utils/sortProtocols.js";
 
-export default function TicketsPlanned() {
+export default function ClientScheduledProtocols() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [protocolsData, setProtocolsData] = useState([]);
@@ -123,7 +123,9 @@ export default function TicketsPlanned() {
         <Topbar />
         <div className="grid grid-cols-1 justify-items-center mb-5">
           <div className="px-5 w-5/6">
-            <div className="mx-1 my-4 font-extrabold text-3xl">Zaplanowane</div>
+            <div className="mx-1 my-4 font-extrabold text-3xl">
+              Oczekujące wizyty
+            </div>
             <div className="grid grid-cols-[5fr_1fr]">
               <Searchbar value={searchTerm} onChange={setSearchTerm} />
               {showButton && (

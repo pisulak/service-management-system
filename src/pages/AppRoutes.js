@@ -12,17 +12,17 @@ import NotFound from "./NotFound.jsx";
 
 // Admin pages
 import Dashboard from "../features/admin/dashboard/DashboardPage.jsx";
-import IncomingProtocols from "../features/admin/protocols/IncomingProtocols.jsx";
-import PlannedProtocols from "../features/admin/protocols/PlannedProtocols.jsx";
-import DoneProtocols from "../features/admin/protocols/DoneProtocols.jsx";
+import PendingProtocols from "../features/admin/protocols/PendingProtocols.jsx";
+import ScheduledProtocols from "../features/admin/protocols/ScheduledProtocols.jsx";
+import ClosedProtocols from "../features/admin/protocols/ClosedProtocols.jsx";
 import Storage from "../features/admin/storage/StoragePage.jsx";
 import Clients from "../features/admin/clients/ClientsPage.jsx";
 
 // Client pages
 import ClientDashboard from "../features/client/dashboard/ClientDashboardPage.jsx";
-import ClientIncomingProtocols from "../features/client/protocols/ClientIncomingProtocols.jsx";
-import ClientPlannedProtocols from "../features/client/protocols/ClientPlannedProtocols.jsx";
-import ClientDoneProtocols from "../features/client/protocols/ClientDoneProtocols.jsx";
+import ClientSubmittedProtocols from "../features/client/protocols/ClientSubmittedProtocols.jsx";
+import ClientScheduledProtocols from "../features/client/protocols/ClientScheduledProtocols.jsx";
+import ClientClosedProtocols from "../features/client/protocols/ClientClosedProtocols.jsx";
 
 function PrivateRoute({ children }) {
   const [loading, setLoading] = useState(true);
@@ -72,26 +72,26 @@ export default function App() {
         />
 
         <Route
-          path="/incomingProtocols"
+          path="/pendingProtocols"
           element={
             <PrivateRoute>
-              <IncomingProtocols />
+              <PendingProtocols />
             </PrivateRoute>
           }
         />
         <Route
-          path="/plannedProtocols"
+          path="/scheduledProtocols"
           element={
             <PrivateRoute>
-              <PlannedProtocols />
+              <ScheduledProtocols />
             </PrivateRoute>
           }
         />
         <Route
-          path="/doneProtocols"
+          path="/closedProtocols"
           element={
             <PrivateRoute>
-              <DoneProtocols />
+              <ClosedProtocols />
             </PrivateRoute>
           }
         />
@@ -125,26 +125,26 @@ export default function App() {
         />
 
         <Route
-          path="/clientIncomingProtocols"
+          path="/clientSubmittedProtocols"
           element={
             <PrivateRoute>
-              <ClientIncomingProtocols />
+              <ClientSubmittedProtocols />
             </PrivateRoute>
           }
         />
         <Route
-          path="/clientPlannedProtocols"
+          path="/clientScheduledProtocols"
           element={
             <PrivateRoute>
-              <ClientPlannedProtocols />
+              <ClientScheduledProtocols />
             </PrivateRoute>
           }
         />
         <Route
-          path="/clientDoneProtocols"
+          path="/clientClosedProtocols"
           element={
             <PrivateRoute>
-              <ClientDoneProtocols />
+              <ClientClosedProtocols />
             </PrivateRoute>
           }
         />

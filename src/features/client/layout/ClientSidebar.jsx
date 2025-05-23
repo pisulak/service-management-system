@@ -22,15 +22,15 @@ export default function SidebarMenu() {
       submenu: [
         {
           icon: Comming,
-          label: "Przychodzące",
-          href: "/clientIncomingProtocols",
+          label: "Wysłane",
+          href: "/clientSubmittedProtocols",
         },
         {
           icon: Planned,
-          label: "Zaplanowane",
-          href: "/clientPlannedProtocols",
+          label: "Oczekujące",
+          href: "/clientScheduledProtocols",
         },
-        { icon: Done, label: "Zakończone", href: "/clientDoneProtocols" },
+        { icon: Done, label: "Zrealizowane", href: "/clientClosedProtocols" },
       ],
     },
   ];

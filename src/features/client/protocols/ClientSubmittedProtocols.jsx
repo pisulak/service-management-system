@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../layout/AdminSidebar.jsx";
+import Sidebar from "../layout/ClientSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
 import Searchbar from "../../../components/common/ProtocolSearchbar.jsx";
-import ProtocolsContainer from "./ProtocolList.jsx";
+import ProtocolsContainer from "./ClientProtocolList.jsx";
 import {
   CalArrowDown,
   CalArrowUp,
 } from "../../../components/icons/CalendarIcons.jsx";
 import { sortProtocolsByDate } from "../../../utils/sortProtocols.js";
 
-export default function TicketsPlanned() {
+export default function ClientSubmittedProtocols() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [protocolsData, setProtocolsData] = useState([]);
@@ -41,7 +41,7 @@ export default function TicketsPlanned() {
         isRecall: false,
         address: "Warszawa, ul. Puławska 45",
         distance: "12km",
-        date: "20.05.2025",
+        date: "",
       },
       {
         company: "Green Energy",
@@ -53,7 +53,7 @@ export default function TicketsPlanned() {
         isRecall: false,
         address: "Kraków, ul. Zielona 7",
         distance: "256km",
-        date: "22.05.2025",
+        date: "",
       },
       {
         company: "AutoPro",
@@ -65,7 +65,7 @@ export default function TicketsPlanned() {
         isRecall: true,
         address: "Poznań, ul. Torowa 19",
         distance: "310km",
-        date: "19.05.2025",
+        date: "",
       },
       {
         company: "BuildSmart",
@@ -77,31 +77,7 @@ export default function TicketsPlanned() {
         isRecall: false,
         address: "Gdańsk, ul. Nadmorska 3",
         distance: "435km",
-        date: "19.05.2025",
-      },
-      {
-        company: "SmartLight",
-        title: "Brak zasilania w module LED",
-        description:
-          "Po instalacji jednego z modułów nie świeci się żadna dioda.",
-        mobileNumber: "+48 700 555 333",
-        underWarranty: false,
-        isRecall: false,
-        address: "Łódź, ul. Elektryczna 1",
-        distance: "180km",
-        date: "26.05.2025",
-      },
-      {
-        company: "HydroMax",
-        title: "Wyciek z zaworu głównego",
-        description:
-          "Zawór główny przepuszcza wodę pod ciśnieniem – wymagana wymiana.",
-        mobileNumber: "+48 666 222 999",
-        underWarranty: true,
-        isRecall: false,
-        address: "Lublin, ul. Wodna 14",
-        distance: "90km",
-        date: "28.05.2025",
+        date: "",
       },
     ]);
   }, []);
@@ -123,7 +99,9 @@ export default function TicketsPlanned() {
         <Topbar />
         <div className="grid grid-cols-1 justify-items-center mb-5">
           <div className="px-5 w-5/6">
-            <div className="mx-1 my-4 font-extrabold text-3xl">Zaplanowane</div>
+            <div className="mx-1 my-4 font-extrabold text-3xl">
+              Wysłane zgłoszenia
+            </div>
             <div className="grid grid-cols-[5fr_1fr]">
               <Searchbar value={searchTerm} onChange={setSearchTerm} />
               {showButton && (

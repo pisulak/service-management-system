@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../layout/ClientSidebar.jsx";
+import Sidebar from "../layout/AdminSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
 import Searchbar from "../../../components/common/ProtocolSearchbar.jsx";
-import ProtocolsContainer from "./ClientProtocolList.jsx";
+import ProtocolsContainer from "./ProtocolList.jsx";
 import {
   CalArrowDown,
   CalArrowUp,
 } from "../../../components/icons/CalendarIcons.jsx";
 import { sortProtocolsByDate } from "../../../utils/sortProtocols.js";
 
-export default function TicketsDone() {
+export default function ClosedProtocols() {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [protocolsData, setProtocolsData] = useState([]);
@@ -125,7 +125,9 @@ export default function TicketsDone() {
 
         <div className="grid grid-cols-1 justify-items-center mb-5">
           <div className="px-5 w-5/6">
-            <div className="mx-1 my-4 font-extrabold text-3xl">Zakończone</div>
+            <div className="mx-1 my-4 font-extrabold text-3xl">
+              Zrealizowane zgłoszenia
+            </div>
             <div className="grid grid-cols-[5fr_1fr]">
               <Searchbar value={searchTerm} onChange={setSearchTerm} />
               {showButton && (
