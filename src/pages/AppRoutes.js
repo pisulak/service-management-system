@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 import Login from "../auth/LoginPage.jsx";
 import Register from "../auth/RegisterPage.jsx";
+import RegisterCompanyPage from "../auth/RegisterCompanyPage.jsx";
 import NotFound from "./NotFound.jsx";
 
 // Admin pages
@@ -60,6 +61,14 @@ export default function AppRoutes() {
         <Route path="/register" element={<Register />} />
 
         {/* Chronione trasy */}
+        <Route
+          path="/registerCompany"
+          element={
+            <PrivateRoute>
+              <RegisterCompanyPage />
+            </PrivateRoute>
+          }
+        />
 
         {/* Admin */}
         <Route

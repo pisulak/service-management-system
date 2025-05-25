@@ -15,9 +15,12 @@ export function useRegister() {
     setSuccess("");
 
     try {
-      await registerUser(email, password);
+      const response = await registerUser(email, password);
+      const userId = response.user.id;
+
       setSuccess("Rejestracja zakończona sukcesem!");
-      setTimeout(() => navigate("/login"), 2000);
+
+      setTimeout(() => navigate(`/registerCompany?userId=${userId}`), 1500);
     } catch (err) {
       setError(err.message || "Błąd przy rejestracji");
     }

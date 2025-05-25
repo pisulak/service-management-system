@@ -32,6 +32,27 @@ app.use(
   })
 );
 
+app.post("/api/companies", async (req, res) => {
+  const { companyName, nip, address, phone } = req.body;
+  const user = req.session.user;
+
+  if (!user) {
+    return res.status(401).json({ message: "Nieautoryzowany" });
+  }
+
+  try {
+    await pool.query(
+      "INSERT INTO companies (user_id, company_name, nip, address, phone_number, join_date) VALUES ($1, $2, $3, $4, $5, CURRENT_DATE)",
+      [user.id, companyName, nip, address, phone]
+    );
+
+    res.status(201).json({ message: "Firma zarejestrowana" });
+  } catch (err) {
+    console.error("Błąd rejestracji firmy:", err);
+    res.status(500).json({ message: "Błąd serwera" });
+  }
+});
+
 // Endpointy API
 app.use("/api", authRoutes);
 

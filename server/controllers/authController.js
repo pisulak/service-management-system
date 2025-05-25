@@ -4,6 +4,10 @@ const { hashPassword, verifyPassword } = require("../utils/passwordUtils.js");
 exports.register = async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).json({ message: "Wszystkie pola są wymagane" });
+  }
+
   try {
     const existing = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
@@ -14,12 +18,20 @@ exports.register = async (req, res) => {
 
     const hashedPassword = await hashPassword(password);
 
-    await pool.query("INSERT INTO users (email, password) VALUES ($1, $2)", [
-      email,
-      hashedPassword,
-    ]);
+    const result = await pool.query(
+      "INSERT INTO users (email, password, role) VALUES ($1, $2, $3) RETURNING id, email, role",
+      [email, hashedPassword, "client"]
+    );
 
-    res.status(201).json({ message: "Rejestracja zakończona sukcesem" });
+    const user = result.rows[0];
+
+    req.session.user = {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    res.status(201).json({ message: "Rejestracja zakończona sukcesem", user });
   } catch (err) {
     console.error("Rejestracja błąd:", err);
     res.status(500).json({ message: "Błąd serwera" });
@@ -49,6 +61,7 @@ exports.login = async (req, res) => {
     req.session.user = {
       id: user.id,
       email: user.email,
+      role: user.role,
     };
 
     res.json({ message: "Zalogowano pomyślnie" });
