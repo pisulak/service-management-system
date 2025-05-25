@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from "../hooks/useAuth.js";
 
 import Login from "../auth/LoginPage.jsx";
 import Register from "../auth/RegisterPage.jsx";
@@ -25,28 +26,18 @@ import ClientSubmittedProtocols from "../features/client/protocols/ClientSubmitt
 import ClientScheduledProtocols from "../features/client/protocols/ClientScheduledProtocols.jsx";
 import ClientClosedProtocols from "../features/client/protocols/ClientClosedProtocols.jsx";
 
-function PrivateRoute({ children }) {
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
+function PrivateRoute({ children, allowedRoles }) {
+  const user = useAuth();
 
-  useEffect(() => {
-    fetch("/api/me", { credentials: "include" })
-      .then((res) => {
-        if (res.ok) {
-          setAuthenticated(true);
-        } else {
-          setAuthenticated(false);
-        }
-        setLoading(false);
-      })
-      .catch(() => {
-        setAuthenticated(false);
-        setLoading(false);
-      });
-  }, []);
+  if (user === null) {
+    // Możesz dodać loader jeśli chcesz
+    return null;
+  }
 
-  if (loading) return null;
-  if (!authenticated) return <Navigate to="/login" replace />;
+  if (!allowedRoles.includes(user.role)) {
+    // Jeśli użytkownik nie ma dostępu, przekieruj np. na login lub stronę bez uprawnień
+    return <Navigate to="/login" replace />;
+  }
 
   return children;
 }
@@ -64,7 +55,7 @@ export default function AppRoutes() {
         <Route
           path="/registerCompany"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["client"]}>
               <RegisterCompanyPage />
             </PrivateRoute>
           }
@@ -74,7 +65,7 @@ export default function AppRoutes() {
         <Route
           path="/dashboard"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["admin"]}>
               <Dashboard />
             </PrivateRoute>
           }
@@ -83,7 +74,7 @@ export default function AppRoutes() {
         <Route
           path="/pendingProtocols"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["admin"]}>
               <PendingProtocols />
             </PrivateRoute>
           }
@@ -91,7 +82,7 @@ export default function AppRoutes() {
         <Route
           path="/scheduledProtocols"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["admin"]}>
               <ScheduledProtocols />
             </PrivateRoute>
           }
@@ -99,7 +90,7 @@ export default function AppRoutes() {
         <Route
           path="/closedProtocols"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["admin"]}>
               <ClosedProtocols />
             </PrivateRoute>
           }
@@ -108,7 +99,7 @@ export default function AppRoutes() {
         <Route
           path="/storage"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["admin"]}>
               <Storage />
             </PrivateRoute>
           }
@@ -117,7 +108,7 @@ export default function AppRoutes() {
         <Route
           path="/clients"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["admin"]}>
               <Clients />
             </PrivateRoute>
           }
@@ -127,7 +118,7 @@ export default function AppRoutes() {
         <Route
           path="/clientDashboard"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["client"]}>
               <ClientDashboard />
             </PrivateRoute>
           }
@@ -136,7 +127,7 @@ export default function AppRoutes() {
         <Route
           path="/clientSubmittedProtocols"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["client"]}>
               <ClientSubmittedProtocols />
             </PrivateRoute>
           }
@@ -144,7 +135,7 @@ export default function AppRoutes() {
         <Route
           path="/clientScheduledProtocols"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["client"]}>
               <ClientScheduledProtocols />
             </PrivateRoute>
           }
@@ -152,7 +143,7 @@ export default function AppRoutes() {
         <Route
           path="/clientClosedProtocols"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={["client"]}>
               <ClientClosedProtocols />
             </PrivateRoute>
           }

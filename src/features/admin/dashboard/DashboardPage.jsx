@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import Sidebar from "../layout/AdminSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
 import StatPanel from "./StatsPanel.jsx";
@@ -7,23 +6,6 @@ import TodayProtocols from "./TodayProtocols.jsx";
 import StoragePanel from "./StoragePanel.jsx";
 
 export default function DashboardPage() {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("/api/me", {
-      credentials: "include",
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Unauthorized");
-        return res.json();
-      })
-      .then((data) => setUser(data.user))
-      .catch(() => navigate("/login"));
-  }, [navigate]);
-
-  if (!user) return null;
-
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />

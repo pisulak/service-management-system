@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import Sidebar from "../layout/ClientSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
 import StatsPanel from "./ClientStatsPanel.jsx";
@@ -7,23 +6,6 @@ import TodayProtocols from "./ClientTodayProtocols.jsx";
 import { FilePlus } from "../../../components/icons/AddProtocolIcon.jsx";
 
 export default function ClientDashboardPage() {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("/api/me", {
-      credentials: "include",
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Unauthorized");
-        return res.json();
-      })
-      .then((data) => setUser(data.user))
-      .catch(() => navigate("/login"));
-  }, [navigate]);
-
-  if (!user) return null;
-
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />

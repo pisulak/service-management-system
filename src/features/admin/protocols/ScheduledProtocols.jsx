@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Sidebar from "../layout/AdminSidebar.jsx";
 import Topbar from "../../../components/layout/Topbar.jsx";
 import Searchbar from "../../../components/common/ProtocolSearchbar.jsx";
@@ -11,23 +10,9 @@ import {
 import { sortProtocolsByDate } from "../../../utils/sortProtocols.js";
 
 export default function ScheduledProtocols() {
-  const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [protocolsData, setProtocolsData] = useState([]);
   const [isAscending, setIsAscending] = useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("/api/me", {
-      credentials: "include",
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Unauthorized");
-        return res.json();
-      })
-      .then((data) => setUser(data.user))
-      .catch(() => navigate("/login"));
-  }, [navigate]);
 
   useEffect(() => {
     setProtocolsData([
@@ -105,8 +90,6 @@ export default function ScheduledProtocols() {
       },
     ]);
   }, []);
-
-  if (!user) return null;
 
   const sortedProtocols = sortProtocolsByDate(protocolsData, isAscending);
 
