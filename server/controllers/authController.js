@@ -64,7 +64,14 @@ exports.login = async (req, res) => {
       role: user.role,
     };
 
-    res.json({ message: "Zalogowano pomyślnie" });
+    res.json({
+      message: "Zalogowano pomyślnie",
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+    });
   } catch (err) {
     console.error("Logowanie błąd:", err);
     res.status(500).json({ message: "Błąd serwera" });

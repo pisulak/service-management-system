@@ -14,7 +14,16 @@ export function useLogin() {
 
     try {
       const data = await loginUser(email, password);
-      navigate("/dashboard");
+
+      const role = data.user?.role;
+
+      if (role === "admin") {
+        navigate("/dashboard");
+      } else if (role === "client") {
+        navigate("/clientDashboard");
+      } else {
+        setError("Nieznana rola użytkownika");
+      }
     } catch (err) {
       setError(err.message || "Błąd przy logowaniu");
     }
