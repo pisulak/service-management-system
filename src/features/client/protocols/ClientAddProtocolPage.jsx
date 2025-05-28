@@ -31,7 +31,7 @@ export default function ClientAddProtocolPage() {
     setSuccess("");
 
     try {
-      const res = await fetch("/api/protocols", {
+      const res = await fetch("/api/protocols/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

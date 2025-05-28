@@ -69,6 +69,32 @@ exports.createProtocol = async (req, res) => {
 // GET
 
 // CLIENT
+exports.getUserTodayProtocols = async (req, res) => {
+  const user = req.session.user;
+
+  if (!user || user.role !== "client") {
+    return res.status(403).json({ message: "Brak dostępu" });
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT tickets.*, companies.*
+       FROM tickets
+       JOIN companies ON tickets.client_id = companies.user_id
+       WHERE client_id = $1
+         AND tickets.status = 'scheduled'
+         AND DATE(tickets.scheduled_at) = CURRENT_DATE
+       ORDER BY tickets.created_at DESC`,
+      [user.id]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Błąd pobierania zgłoszeń o statusie scheduled:", err);
+    res.status(500).json({ message: "Błąd serwera" });
+  }
+};
+
 exports.getUserSubmittedProtocols = async (req, res) => {
   const user = req.session.user;
 
@@ -142,6 +168,30 @@ exports.getUserClosedProtocols = async (req, res) => {
 };
 
 // ADMIN
+exports.getTodayProtocols = async (req, res) => {
+  const user = req.session.user;
+
+  if (!user || user.role !== "admin") {
+    return res.status(403).json({ message: "Brak dostępu" });
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT tickets.*, companies.*
+       FROM tickets
+       JOIN companies ON tickets.client_id = companies.user_id
+       WHERE tickets.status = 'scheduled'
+         AND DATE(tickets.scheduled_at) = CURRENT_DATE
+       ORDER BY tickets.created_at DESC`
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Błąd pobierania dzisiejszych zgłoszeń (admin):", err);
+    res.status(500).json({ message: "Błąd serwera" });
+  }
+};
+
 exports.getSubmittedProtocols = async (req, res) => {
   const user = req.session.user;
 

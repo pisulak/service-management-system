@@ -1,32 +1,43 @@
+import { useEffect, useState } from "react";
 import ProtocolItem from "./TodayProtocolItem.jsx";
 
 export default function TodayProtocols() {
-  const todayData = [
-    {
-      company: "Tech Solutions",
-      title: "Awaria systemu alarmowego",
-      description:
-        "Klient zgłosił problem z centralą alarmową. Występują fałszywe alarmy.",
-      mobileNumber: "+48 501 123 456",
-      underWarranty: true,
-      isRecall: false,
-      address: "Warszawa, ul. Puławska 45",
-      distance: "12km",
-      date: "19.05.2025",
-    },
-    {
-      company: "Green Energy",
-      title: "Przegląd instalacji fotowoltaicznej",
-      description:
-        "Zgodnie z harmonogramem należy przeprowadzić coroczny przegląd techniczny.",
-      mobileNumber: "+48 600 987 123",
-      underWarranty: false,
-      isRecall: false,
-      address: "Kraków, ul. Zielona 7",
-      distance: "256km",
-      date: "19.05.2025",
-    },
-  ];
+  const [todayData, setTodayData] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProtocols = async () => {
+      try {
+        const res = await fetch("/api/protocols/adminToday", {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          throw new Error("Nie udało się pobrać dzisiejszych zgłoszeń");
+        }
+
+        const data = await res.json();
+
+        const formatted = data.map((protocol) => ({
+          company: protocol.company_name || "Nieznana firma",
+          title: protocol.title,
+          description: protocol.description,
+          mobileNumber: protocol.phone_number || "Brak numeru",
+          underWarranty: protocol.is_warranty,
+          isRecall: !!protocol.parent_id,
+          address: protocol.address || "Brak adresu",
+          distance: protocol.distance || "-",
+          date: new Date(protocol.scheduled_at).toLocaleDateString("pl-PL"),
+        }));
+
+        setTodayData(formatted);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchProtocols();
+  }, []);
 
   return (
     <div className="overflow-y-auto scroll-smooth">
