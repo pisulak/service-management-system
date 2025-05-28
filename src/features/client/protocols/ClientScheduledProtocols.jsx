@@ -15,80 +15,38 @@ export default function ClientScheduledProtocols() {
   const [isAscending, setIsAscending] = useState(true);
 
   useEffect(() => {
-    setProtocolsData([
-      {
-        company: "Tech Solutions",
-        title: "Awaria systemu alarmowego",
-        description:
-          "Klient zgłosił problem z centralą alarmową. Występują fałszywe alarmy.",
-        mobileNumber: "+48 501 123 456",
-        underWarranty: true,
-        isRecall: false,
-        address: "Warszawa, ul. Puławska 45",
-        distance: "12km",
-        date: "20.05.2025",
-      },
-      {
-        company: "Green Energy",
-        title: "Przegląd instalacji fotowoltaicznej",
-        description:
-          "Zgodnie z harmonogramem należy przeprowadzić coroczny przegląd techniczny.",
-        mobileNumber: "+48 600 987 123",
-        underWarranty: false,
-        isRecall: false,
-        address: "Kraków, ul. Zielona 7",
-        distance: "256km",
-        date: "22.05.2025",
-      },
-      {
-        company: "AutoPro",
-        title: "Wezwanie serwisowe (recall)",
-        description:
-          "Naprawa układu hamulcowego zgodnie z kampanią serwisową producenta.",
-        mobileNumber: "+48 793 345 678",
-        underWarranty: true,
-        isRecall: true,
-        address: "Poznań, ul. Torowa 19",
-        distance: "310km",
-        date: "19.05.2025",
-      },
-      {
-        company: "BuildSmart",
-        title: "Usterka czujnika CO2",
-        description:
-          "W biurze klienta czujnik nie wykrywa stężenia dwutlenku węgla.",
-        mobileNumber: "+48 512 223 111",
-        underWarranty: true,
-        isRecall: false,
-        address: "Gdańsk, ul. Nadmorska 3",
-        distance: "435km",
-        date: "19.05.2025",
-      },
-      {
-        company: "SmartLight",
-        title: "Brak zasilania w module LED",
-        description:
-          "Po instalacji jednego z modułów nie świeci się żadna dioda.",
-        mobileNumber: "+48 700 555 333",
-        underWarranty: false,
-        isRecall: false,
-        address: "Łódź, ul. Elektryczna 1",
-        distance: "180km",
-        date: "26.05.2025",
-      },
-      {
-        company: "HydroMax",
-        title: "Wyciek z zaworu głównego",
-        description:
-          "Zawór główny przepuszcza wodę pod ciśnieniem – wymagana wymiana.",
-        mobileNumber: "+48 666 222 999",
-        underWarranty: true,
-        isRecall: false,
-        address: "Lublin, ul. Wodna 14",
-        distance: "90km",
-        date: "28.05.2025",
-      },
-    ]);
+    const fetchClosedProtocols = async () => {
+      try {
+        const res = await fetch("/api/protocols/clientClosed", {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          throw new Error("Nie udało się pobrać zgłoszeń");
+        }
+
+        const data = await res.json();
+
+        const formatted = data.map((protocol) => ({
+          id: protocol.id,
+          company: protocol.company_name || "Nieznana firma",
+          title: protocol.title,
+          description: protocol.description,
+          mobileNumber: protocol.phone_number || "Brak numeru",
+          underWarranty: protocol.is_warranty,
+          isRecall: !!protocol.parent_id,
+          address: protocol.address || "Brak adresu",
+          distance: "-",
+          date: new Date(protocol.scheduled_at).toLocaleDateString("pl-PL"),
+        }));
+
+        setProtocolsData(formatted);
+      } catch (error) {
+        console.error("Błąd podczas ładowania danych:", error);
+      }
+    };
+
+    fetchClosedProtocols();
   }, []);
 
   const sortedProtocols = sortProtocolsByDate(protocolsData, isAscending);

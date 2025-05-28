@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Searchbar from "../../../components/common/Searchbar.jsx";
 import SortingFilter from "./SortingFilter.jsx";
 import ClientItem from "./ClientItem.jsx";
@@ -10,84 +11,39 @@ const sortingFields = [
   { key: "priority", label: "Priorytet", type: "string" },
 ];
 
-const initialData = [
-  {
-    company: "Tech Solutions Sp. z o.o.",
-    date: "2023-01-15",
-    tickets: 34,
-    priority: "Wysoki",
-  },
-  {
-    company: "InnoSoft",
-    date: "2022-11-03",
-    tickets: 12,
-    priority: "Standardowy",
-  },
-  {
-    company: "NetWare Polska",
-    date: "2021-06-27",
-    tickets: 58,
-    priority: "Niski",
-  },
-  {
-    company: "AlphaBit Systems",
-    date: "2023-03-22",
-    tickets: 8,
-    priority: "Brak",
-  },
-  {
-    company: "GreenData",
-    date: "2020-09-10",
-    tickets: 91,
-    priority: "Niski",
-  },
-  {
-    company: "DigitalCore",
-    date: "2022-05-17",
-    tickets: 26,
-    priority: "Wysoki",
-  },
-  {
-    company: "SmartApps Inc.",
-    date: "2021-12-01",
-    tickets: 44,
-    priority: "Standardowy",
-  },
-  {
-    company: "Cloudify",
-    date: "2023-02-10",
-    tickets: 15,
-    priority: "Brak",
-  },
-  {
-    company: "NextGen IT",
-    date: "2022-07-29",
-    tickets: 73,
-    priority: "Niski",
-  },
-  {
-    company: "SynergyTech",
-    date: "2021-10-08",
-    tickets: 19,
-    priority: "Wysoki",
-  },
-  {
-    company: "VisionWare Group",
-    date: "2020-03-05",
-    tickets: 37,
-    priority: "Standardowy",
-  },
-  {
-    company: "ByteForge Technologies",
-    date: "2023-08-18",
-    tickets: 62,
-    priority: "Niski",
-  },
-];
-
 export default function ClientList() {
+  const [clients, setClients] = useState([]);
   const { searchTerm, setSearchTerm, setSortKey, setSortOrder, filteredData } =
-    useFilteredSortedData(initialData);
+    useFilteredSortedData(clients);
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const res = await fetch("/api/clients/Clients", {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          throw new Error("Nie udało się pobrać klientów");
+        }
+
+        const data = await res.json();
+
+        const formatted = data.map((item) => ({
+          company: item.company_name,
+          date: new Date(item.join_date).toLocaleDateString("pl-PL"),
+          tickets: item.ticket_count,
+          priority: item.priority,
+        }));
+
+        setClients(formatted);
+      } catch (err) {
+        console.error("Błąd pobierania klientów:", err);
+      }
+    };
+
+    fetchClients();
+  }, []);
 
   return (
     <div className="m-5 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">

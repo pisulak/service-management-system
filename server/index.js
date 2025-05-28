@@ -5,6 +5,9 @@ const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
 const pool = require("./db");
 const authRoutes = require("./routes/authRoutes");
+const protocolRoutes = require("./routes/protocolRoutes");
+const ClientRoutes = require("./routes/clientRoutes");
+const StorageRoutes = require("./routes/storageRoutes");
 
 const app = express();
 const PORT = 5010;
@@ -55,6 +58,9 @@ app.post("/api/companies", async (req, res) => {
 
 // Endpointy API
 app.use("/api", authRoutes);
+app.use("/api/protocols", protocolRoutes);
+app.use("/api/clients", ClientRoutes);
+app.use("/api/storage", StorageRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server działa na porcie ${PORT}`);

@@ -23,11 +23,19 @@ export default function ProductItem({
       <span className="text-left col-span-2 truncate overflow-hidden whitespace-nowrap">
         {description}
       </span>
-      <span>{length} mm</span>
-      <span>{width} mm</span>
-      <span>{height} mm</span>
-      <span>{weight} kg</span>
-      <span>{price} zł</span>
+      <span>
+        {length !== null && length !== undefined ? length + " mm" : ""}
+      </span>
+      <span>{width !== null && width !== undefined ? width + " mm" : ""}</span>
+      <span>
+        {height !== null && height !== undefined ? height + " mm" : ""}
+      </span>
+      <span>
+        {weight !== null && weight !== undefined
+          ? (weight / 1000).toFixed(3) + " kg"
+          : ""}
+      </span>
+      <span>{(price / 100).toFixed(2)} zł</span>
       <span className={`${quantity ? "" : "text-red-500"}`}>
         {quantity} szt.
       </span>

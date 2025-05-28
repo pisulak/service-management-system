@@ -25,6 +25,7 @@ import ClientDashboard from "../features/client/dashboard/ClientDashboardPage.js
 import ClientSubmittedProtocols from "../features/client/protocols/ClientSubmittedProtocols.jsx";
 import ClientScheduledProtocols from "../features/client/protocols/ClientScheduledProtocols.jsx";
 import ClientClosedProtocols from "../features/client/protocols/ClientClosedProtocols.jsx";
+import ClientAddProtocolPage from "../features/client/protocols/ClientAddProtocolPage.jsx";
 
 function PrivateRoute({ children, allowedRoles }) {
   const user = useAuth();
@@ -145,6 +146,15 @@ export default function AppRoutes() {
           element={
             <PrivateRoute allowedRoles={["client"]}>
               <ClientClosedProtocols />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/clientAddProtocol"
+          element={
+            <PrivateRoute allowedRoles={["client"]}>
+              <ClientAddProtocolPage />
             </PrivateRoute>
           }
         />

@@ -34,7 +34,7 @@ export default function ClientSidebar() {
         { icon: Done, label: "Zrealizowane", href: "/clientClosedProtocols" },
       ],
     },
-    { icon: FilePlus, label: "Zgłoś awarię", href: "#" },
+    { icon: FilePlus, label: "Zgłoś awarię", href: "/clientAddProtocol" },
   ];
 
   useEffect(() => {
