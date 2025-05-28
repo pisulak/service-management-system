@@ -17,7 +17,9 @@ export default function MiniProductItem({
       <span className="text-base truncate overflow-hidden whitespace-nowrap">
         {product}
       </span>
-      <span className="text-base text-right">{price} zł</span>
+      <span className="text-base text-right">
+        {(price / 100).toFixed(2)} zł
+      </span>
       <span className="text-base text-right">
         <span className={`font-medium ${quantity ? "" : "text-red-500"}`}>
           {quantity} szt.
