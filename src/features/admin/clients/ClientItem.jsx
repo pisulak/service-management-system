@@ -1,4 +1,6 @@
 import { Company } from "../../../components/icons/MenuIcons";
+import { High, Medium, Low } from "../../../components/icons/PriorityIcons";
+
 export default function ClientItem({
   index,
   company,
@@ -8,6 +10,14 @@ export default function ClientItem({
 }) {
   const isEven = index % 2 === 0;
   const Logo = Company;
+  const priorityIcon =
+    priority === "Wysoki" ? (
+      <High className="text-orange-600" />
+    ) : priority === "Standardowy" ? (
+      <Medium className="text-green-600" />
+    ) : (
+      <Low className="text-gray-300" />
+    );
 
   return (
     <div
@@ -23,7 +33,9 @@ export default function ClientItem({
       </span>
       <span className="">{date}</span>
       <span className="">{tickets}</span>
-      <span>{priority}</span>
+      <span className="flex gap-2">
+        {priorityIcon} {priority}
+      </span>
       <a
         href="#"
         className={`justify-self-end w-fit px-7 py-1 rounded-xl cursor-pointer hover:duration-300 ${
