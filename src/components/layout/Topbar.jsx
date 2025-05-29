@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Company,
   Notification,
@@ -12,6 +12,7 @@ import { DropdownMenu } from "./DropdownMenu.jsx";
 
 export default function Topbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [companyName, setCompanyName] = useState("Nazwa Firmy");
   const dropdownRef = useRef(null);
   const Logo = Company;
 
@@ -33,6 +34,25 @@ export default function Topbar() {
     }
   };
 
+  useEffect(() => {
+    const fetchCompany = async () => {
+      try {
+        const res = await fetch("/api/myCompany", {
+          credentials: "include",
+        });
+        if (!res.ok) throw new Error("Nie udało się pobrać firmy");
+        const data = await res.json();
+        if (data.company?.company_name) {
+          setCompanyName(data.company.company_name);
+        }
+      } catch (err) {
+        console.error("Błąd pobierania danych firmy:", err);
+      }
+    };
+
+    fetchCompany();
+  }, []);
+
   return (
     <div className="relative flex justify-end items-center w-full h-16 px-10">
       <div
@@ -40,7 +60,7 @@ export default function Topbar() {
         ref={dropdownRef}
         className="flex items-center cursor-pointer hover:underline"
       >
-        Nazwa Firmy
+        {companyName}
         <span className="ml-6 p-2 border border-gray-400 rounded-full">
           <Logo />
         </span>

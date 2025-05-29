@@ -92,3 +92,28 @@ exports.getCurrentUser = (req, res) => {
     res.status(401).json({ message: "Nie zalogowano" });
   }
 };
+
+exports.getCurrentUserWithCompany = async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "Nie zalogowano" });
+  }
+
+  const user = req.session.user;
+
+  try {
+    const companyResult = await pool.query(
+      "SELECT * FROM companies WHERE user_id = $1",
+      [user.id]
+    );
+
+    const company = companyResult.rows[0] || null;
+
+    res.json({
+      user,
+      company,
+    });
+  } catch (error) {
+    console.error("Błąd podczas pobierania danych firmy:", error);
+    res.status(500).json({ message: "Błąd serwera" });
+  }
+};
