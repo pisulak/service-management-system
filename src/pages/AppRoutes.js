@@ -31,12 +31,10 @@ function PrivateRoute({ children, allowedRoles }) {
   const user = useAuth();
 
   if (user === null) {
-    // Możesz dodać loader jeśli chcesz
     return null;
   }
 
   if (!allowedRoles.includes(user.role)) {
-    // Jeśli użytkownik nie ma dostępu, przekieruj np. na login lub stronę bez uprawnień
     return <Navigate to="/login" replace />;
   }
 
