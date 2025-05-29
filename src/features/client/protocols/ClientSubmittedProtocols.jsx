@@ -15,9 +15,9 @@ export default function ClientSubmittedProtocols() {
   const [isAscending, setIsAscending] = useState(true);
 
   useEffect(() => {
-    const fetchClosedProtocols = async () => {
+    const fetchSubmittedProtocols = async () => {
       try {
-        const res = await fetch("/api/protocols/clientClosed", {
+        const res = await fetch("/api/protocols/clientSubmitted", {
           credentials: "include",
         });
 
@@ -29,14 +29,14 @@ export default function ClientSubmittedProtocols() {
 
         const formatted = data.map((protocol) => ({
           id: protocol.id,
-          company: protocol.company_name || "Nieznana firma",
+          ticketNumber: protocol.ticket_number,
+          type: protocol.type,
+          hasDevice: protocol.has_device,
+          deviceName: protocol.device_name,
           title: protocol.title,
           description: protocol.description,
-          mobileNumber: protocol.phone_number || "Brak numeru",
           underWarranty: protocol.is_warranty,
-          isRecall: !!protocol.parent_id,
-          address: protocol.address || "Brak adresu",
-          distance: "-",
+          parentTicket: protocol.parent_ticket_id,
           date: new Date(protocol.created_at).toLocaleDateString("pl-PL"),
         }));
 
@@ -46,7 +46,7 @@ export default function ClientSubmittedProtocols() {
       }
     };
 
-    fetchClosedProtocols();
+    fetchSubmittedProtocols();
   }, []);
 
   const sortedProtocols = sortProtocolsByDate(protocolsData, isAscending);

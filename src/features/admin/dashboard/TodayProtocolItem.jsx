@@ -62,7 +62,7 @@ export default function TodayProtocolItem({
         {typeText}: {title}
       </h2>
       <div className="col-span-2 mx-4">
-        <p className="mb-2 font-light">{description}</p>
+        <p className="mb-4 font-light">{description}</p>
         {hasDevice && (
           <div className="flex gap-2">
             <Device />

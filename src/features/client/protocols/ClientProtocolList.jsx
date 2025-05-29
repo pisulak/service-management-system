@@ -13,14 +13,15 @@ export default function ProtocolsContainer({ searchTerm, protocolsData }) {
         {filteredProtocols.map((item, index) => (
           <ClientProtocolItem
             key={index}
-            company={item.company}
+            id={item.id}
+            ticketNumber={item.ticketNumber}
+            type={item.type}
+            hasDevice={item.hasDevice}
+            deviceName={item.deviceName}
             title={item.title}
             description={item.description}
-            mobileNumber={item.mobileNumber}
             underWarranty={item.underWarranty}
-            isRecall={item.isRecall}
-            address={item.address}
-            distance={item.distance}
+            parentTicket={item.parentTicket}
             date={item.date}
           />
         ))}
