@@ -29,14 +29,19 @@ export default function PendingProtocols() {
 
         const formatted = data.map((protocol) => ({
           id: protocol.id,
+          ticketNumber: protocol.ticket_number,
+          type: protocol.type,
+          hasDevice: protocol.has_device,
+          deviceName: protocol.device_name,
           company: protocol.company_name || "Nieznana firma",
           title: protocol.title,
           description: protocol.description,
           mobileNumber: protocol.phone_number || "Brak numeru",
           underWarranty: protocol.is_warranty,
-          isRecall: !!protocol.parent_id,
+          parentTicket: protocol.parent_ticket_id,
           address: protocol.address || "Brak adresu",
-          distance: "-",
+          nip: protocol.nip,
+          priority: protocol.priority,
           date: new Date(protocol.created_at).toLocaleDateString("pl-PL"),
         }));
 

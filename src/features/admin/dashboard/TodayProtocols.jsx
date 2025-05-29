@@ -19,14 +19,20 @@ export default function TodayProtocols() {
         const data = await res.json();
 
         const formatted = data.map((protocol) => ({
+          id: protocol.id,
+          ticketNumber: protocol.ticket_number,
+          type: protocol.type,
+          hasDevice: protocol.has_device,
+          deviceName: protocol.device_name,
           company: protocol.company_name || "Nieznana firma",
           title: protocol.title,
           description: protocol.description,
           mobileNumber: protocol.phone_number || "Brak numeru",
           underWarranty: protocol.is_warranty,
-          isRecall: !!protocol.parent_id,
+          parentTicket: protocol.parent_ticket_id,
           address: protocol.address || "Brak adresu",
-          distance: protocol.distance || "-",
+          nip: protocol.nip,
+          priority: protocol.priority,
           date: new Date(protocol.scheduled_at).toLocaleDateString("pl-PL"),
         }));
 
@@ -45,14 +51,20 @@ export default function TodayProtocols() {
         {todayData.map((item, index) => (
           <ProtocolItem
             key={index}
+            id={item.id}
+            ticketNumber={item.ticketNumber}
+            type={item.type}
+            hasDevice={item.hasDevice}
+            deviceName={item.deviceName}
             company={item.company}
             title={item.title}
             description={item.description}
             mobileNumber={item.mobileNumber}
             underWarranty={item.underWarranty}
-            isRecall={item.isRecall}
+            parentTicket={item.parentTicket}
             address={item.address}
-            distance={item.distance}
+            nip={item.nip}
+            priority={item.priority}
             date={item.date}
           />
         ))}
