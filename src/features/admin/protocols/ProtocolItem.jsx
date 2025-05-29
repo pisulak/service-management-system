@@ -77,7 +77,7 @@ export default function ProtocolItem({
           ) : null}
           <div>
             {!!parentTicket ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 hover:text-blue-700 underline">
                 <Protocol />
                 <a href="#">Powiązane zgłoszenie: {parentTicket}</a>
               </div>
