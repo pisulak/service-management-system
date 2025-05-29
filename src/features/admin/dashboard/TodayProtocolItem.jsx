@@ -27,11 +27,11 @@ export default function TodayProtocolItem({
   const typeText = type === "awaria" ? "Awaria" : "Montaż";
   const priorityIcon =
     priority === "Wysoki" ? (
-      <High className="text-orange-600" />
+      <High className="text-orange-700" />
     ) : priority === "Standardowy" ? (
-      <Medium className="text-green-600" />
+      <Medium className="text-amber-400" />
     ) : (
-      <Low className="text-gray-300" />
+      <Low className="text-lime-600" />
     );
 
   const getDateColor = () => {
@@ -53,10 +53,17 @@ export default function TodayProtocolItem({
 
   return (
     <div className="grid grid-cols-[8fr_5fr] items-center px-6 py-4 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">
-      <h1 className="font-bold text-2xl text-gray-400">{ticketNumber}</h1>
+      <h1 className="font-bold text-2xl text-stone-500">{ticketNumber}</h1>
       <div className={`font-semibold text-right ${dateColor}`}>{date}</div>
       <h1 className="flex items-center gap-3 col-span-2 mt-4 font-bold text-2xl">
-        {company} {priorityIcon}
+        {company}{" "}
+        <span className="relative group">
+          {priorityIcon}
+          <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded bg-opacity-60 bg-gray-500 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            Priorytet: {priority}
+            <div className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-opacity-60 border-t-gray-500" />
+          </div>
+        </span>
       </h1>
       <h2 className="mb-4 col-span-2 font-bold text-xl">
         {typeText}: {title}

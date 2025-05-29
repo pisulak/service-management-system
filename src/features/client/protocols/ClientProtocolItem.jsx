@@ -34,7 +34,7 @@ export default function ClientProtocolItem({
 
   return (
     <div className="grid grid-cols-[8fr_2fr] items-center px-12 py-6 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">
-      <h1 className="font-bold text-2xl text-gray-400">{ticketNumber}</h1>
+      <h1 className="font-bold text-2xl text-stone-500">{ticketNumber}</h1>
       <h2 className="my-3 col-span-2 font-bold text-xl">
         {typeText}: {title}
       </h2>

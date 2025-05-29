@@ -37,7 +37,7 @@ export default function TodayProtocolItem({
 
   return (
     <div className="grid grid-cols-[8fr_5fr] items-center px-6 py-4 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">
-      <h1 className="font-bold text-2xl text-gray-400">{ticketNumber}</h1>
+      <h1 className="font-bold text-2xl text-stone-500">{ticketNumber}</h1>
       <div className={`font-semibold text-right ${dateColor}`}>{date}</div>
       <h2 className="my-4 col-span-2 font-bold text-xl">
         {typeText}: {title}

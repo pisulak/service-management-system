@@ -12,11 +12,11 @@ export default function ClientItem({
   const Logo = Company;
   const priorityIcon =
     priority === "Wysoki" ? (
-      <High className="text-orange-600" />
+      <High className="text-orange-700" />
     ) : priority === "Standardowy" ? (
-      <Medium className="text-green-600" />
+      <Medium className="text-amber-400" />
     ) : (
-      <Low className="text-gray-300" />
+      <Low className="text-lime-600" />
     );
 
   return (
