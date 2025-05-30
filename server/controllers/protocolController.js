@@ -21,12 +21,11 @@ exports.createProtocol = async (req, res) => {
 
   try {
     const admin = await pool.query(
-      "SELECT id FROM users WHERE id = $1 AND role = 'admin'",
-      [6]
+      "SELECT id FROM users WHERE id = 1 AND role = 'admin'"
     );
 
     if (admin.rowCount === 0) {
-      return res.status(400).json({ message: "Admin o ID 6 nie istnieje" });
+      return res.status(400).json({ message: "Admin o ID 1 nie istnieje" });
     }
 
     const prefix = type === "awaria" ? "AW" : "MO";
@@ -78,7 +77,7 @@ exports.getUserTodayProtocols = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.*
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
        FROM tickets
        JOIN companies ON tickets.client_id = companies.user_id
        WHERE client_id = $1
@@ -104,7 +103,7 @@ exports.getUserSubmittedProtocols = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.*
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
            FROM tickets
            JOIN companies ON tickets.client_id = companies.user_id
            WHERE client_id = $1 AND tickets.status = 'submitted'
@@ -128,7 +127,7 @@ exports.getUserScheduledProtocols = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.*
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
              FROM tickets
              JOIN companies ON tickets.client_id = companies.user_id
              WHERE client_id = $1 AND tickets.status = 'scheduled'
@@ -152,7 +151,7 @@ exports.getUserClosedProtocols = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.*
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
              FROM tickets
              JOIN companies ON tickets.client_id = companies.user_id
              WHERE client_id = $1 AND tickets.status = 'closed'
@@ -177,7 +176,7 @@ exports.getTodayProtocols = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.*
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
        FROM tickets
        JOIN companies ON tickets.client_id = companies.user_id
        WHERE tickets.status = 'scheduled'
@@ -201,7 +200,7 @@ exports.getSubmittedProtocols = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.*
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
          FROM tickets
          JOIN companies ON tickets.client_id = companies.user_id
          WHERE tickets.status = 'submitted'
@@ -224,7 +223,7 @@ exports.getScheduledProtocols = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.*
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
          FROM tickets
          JOIN companies ON tickets.client_id = companies.user_id
          WHERE tickets.status = 'scheduled'
@@ -247,7 +246,7 @@ exports.getClosedProtocols = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.*
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
          FROM tickets
          JOIN companies ON tickets.client_id = companies.user_id
          WHERE tickets.status = 'closed'
@@ -259,6 +258,75 @@ exports.getClosedProtocols = async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error("Błąd pobierania closed zgłoszeń:", err);
+    res.status(500).json({ message: "Błąd serwera" });
+  }
+};
+
+exports.getProtocolBasedOnID = async (req, res) => {
+  const user = req.session.user;
+
+  if (!user) {
+    return res.status(403).json({ message: "Brak dostępu" });
+  }
+
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
+        FROM tickets
+        JOIN companies ON tickets.client_id = companies.user_id
+        WHERE tickets.id = $1;`,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Nie znaleziono zgłoszenia" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Błąd pobierania zgłoszenia po ID:", err);
+    res.status(500).json({ message: "Błąd serwera" });
+  }
+};
+
+// PUT
+
+exports.editScheduledDate = async (req, res) => {
+  const user = req.session.user;
+
+  if (!user) {
+    return res.status(403).json({ message: "Brak dostępu" });
+  }
+
+  const { id } = req.params;
+  const { scheduledDate } = req.body;
+
+  if (!scheduledDate) {
+    return res.status(400).json({ message: "Brak daty w żądaniu" });
+  }
+
+  try {
+    const result = await pool.query(
+      `UPDATE tickets
+       SET
+         scheduled_at = $1 ,
+         status = 'submitted'
+       WHERE id = $2
+       RETURNING *;`,
+      [scheduledDate, id]
+    );
+
+    if (result.rowCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Nie znaleziono zgłoszenia lub już zaplanowane" });
+    }
+
+    res.json({ message: "Zaktualizowano zgłoszenie", ticket: result.rows[0] });
+  } catch (err) {
+    console.error("Błąd aktualizacji zgłoszenia:", err);
     res.status(500).json({ message: "Błąd serwera" });
   }
 };

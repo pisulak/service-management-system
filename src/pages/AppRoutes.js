@@ -11,6 +11,8 @@ import Login from "../auth/LoginPage.jsx";
 import Register from "../auth/RegisterPage.jsx";
 import RegisterCompanyPage from "../auth/RegisterCompanyPage.jsx";
 import NotFound from "./NotFound.jsx";
+import ViewProtocol from "../features/admin/protocols/ViewProtocol.jsx";
+import EditProtocol from "../features/admin/protocols/EditProtocol.jsx";
 
 // Admin pages
 import Dashboard from "../features/admin/dashboard/DashboardPage.jsx";
@@ -56,6 +58,24 @@ export default function AppRoutes() {
           element={
             <PrivateRoute allowedRoles={["client"]}>
               <RegisterCompanyPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/protocol/:id"
+          element={
+            <PrivateRoute allowedRoles={["client", "admin"]}>
+              <ViewProtocol />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/editProtocol/:id"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <EditProtocol />
             </PrivateRoute>
           }
         />
