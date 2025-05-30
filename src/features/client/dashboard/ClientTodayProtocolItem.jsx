@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Protocol,
   Warranty,
@@ -34,6 +36,27 @@ export default function TodayProtocolItem({
 
   const dateColor = getDateColor();
   const typeText = type === "awaria" ? "Awaria" : "Montaż";
+  const [parentData, setParentData] = useState(null);
+
+  useEffect(() => {
+    const fetchParentProtocol = async () => {
+      if (!parentTicket) return;
+
+      try {
+        const res = await fetch(`/api/protocols/${parentTicket}`, {
+          credentials: "include",
+        });
+
+        if (!res.ok) throw new Error("Błąd pobierania powiązanego zgłoszenia");
+        const data = await res.json();
+        setParentData(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchParentProtocol();
+  }, [parentTicket]);
 
   return (
     <div className="grid grid-cols-[8fr_5fr] items-center px-6 py-4 bg-white rounded-3xl shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)]">
@@ -69,20 +92,30 @@ export default function TodayProtocolItem({
           ) : null}
         </div>
         <div>
-          {!!parentTicket ? (
-            <div className="flex gap-2 hover:text-blue-700 underline">
+          {parentTicket && parentData && (
+            <div className="flex gap-2 group hover:text-blue-700 underline">
               <Protocol />
-              <a href="#">Powiązane zgłoszenie: {parentTicket}</a>
+              <Link
+                to={`/protocol/${parentTicket}`}
+                state={{ protocol: { id: { parentTicket } } }}
+              >
+                Powiązane zgłoszenie:{" "}
+                <span className="font-semibold text-stone-500 group-hover:text-blue-900">
+                  {parentData.ticket_number}
+                </span>
+              </Link>
             </div>
-          ) : null}
+          )}
         </div>
       </div>
-      <button
-        className="self-end mb-2 px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
-        type="button"
-      >
-        Podgląd zgłoszenia
-      </button>
+      <Link to={`/protocol/${id}`} state={{ protocol: { id: id } }}>
+        <button
+          className="mt-3 px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
+          type="button"
+        >
+          Podgląd zgłoszenia
+        </button>
+      </Link>
     </div>
   );
 }
