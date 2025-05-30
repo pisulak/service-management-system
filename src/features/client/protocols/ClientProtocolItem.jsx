@@ -84,7 +84,7 @@ export default function ClientProtocolItem({
               <div className="flex gap-2 group hover:text-blue-700 underline">
                 <Protocol />
                 <Link
-                  to={`/protocol/${parentTicket}`}
+                  to={`/clientProtocol/${parentTicket}`}
                   state={{ protocol: { id: { parentTicket } } }}
                 >
                   Powiązane zgłoszenie:{" "}
@@ -115,7 +115,7 @@ export default function ClientProtocolItem({
         </div>
       </div>
 
-      <Link to={`/protocol/${id}`} state={{ protocol: { id: id } }}>
+      <Link to={`/clientProtocol/${id}`} state={{ protocol: { id: id } }}>
         <button
           className="mt-3 px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
           type="button"

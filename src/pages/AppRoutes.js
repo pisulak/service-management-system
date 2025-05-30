@@ -11,8 +11,6 @@ import Login from "../auth/LoginPage.jsx";
 import Register from "../auth/RegisterPage.jsx";
 import RegisterCompanyPage from "../auth/RegisterCompanyPage.jsx";
 import NotFound from "./NotFound.jsx";
-import ViewProtocol from "../features/admin/protocols/ViewProtocol.jsx";
-import EditProtocol from "../features/admin/protocols/EditProtocol.jsx";
 
 // Admin pages
 import Dashboard from "../features/admin/dashboard/DashboardPage.jsx";
@@ -21,6 +19,8 @@ import ScheduledProtocols from "../features/admin/protocols/ScheduledProtocols.j
 import ClosedProtocols from "../features/admin/protocols/ClosedProtocols.jsx";
 import Storage from "../features/admin/storage/StoragePage.jsx";
 import Clients from "../features/admin/clients/ClientsPage.jsx";
+import ViewProtocol from "../features/admin/protocols/ViewProtocol.jsx";
+import EditProtocol from "../features/admin/protocols/EditProtocol.jsx";
 
 // Client pages
 import ClientDashboard from "../features/client/dashboard/ClientDashboardPage.jsx";
@@ -28,6 +28,7 @@ import ClientSubmittedProtocols from "../features/client/protocols/ClientSubmitt
 import ClientScheduledProtocols from "../features/client/protocols/ClientScheduledProtocols.jsx";
 import ClientClosedProtocols from "../features/client/protocols/ClientClosedProtocols.jsx";
 import ClientAddProtocolPage from "../features/client/protocols/ClientAddProtocolPage.jsx";
+import ClientViewProtocol from "../features/client/protocols/ClientViewProtocol.jsx";
 
 function PrivateRoute({ children, allowedRoles }) {
   const user = useAuth();
@@ -65,8 +66,17 @@ export default function AppRoutes() {
         <Route
           path="/protocol/:id"
           element={
-            <PrivateRoute allowedRoles={["client", "admin"]}>
+            <PrivateRoute allowedRoles={["admin"]}>
               <ViewProtocol />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/clientProtocol/:id"
+          element={
+            <PrivateRoute allowedRoles={["client"]}>
+              <ClientViewProtocol />
             </PrivateRoute>
           }
         />
