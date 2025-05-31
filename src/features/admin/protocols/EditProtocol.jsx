@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   Protocol,
   Warranty,
@@ -11,11 +11,16 @@ import DateInput from "../../../components/common/DateInput.jsx";
 
 export default function EditProtocol() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [protocol, setProtocol] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [parentData, setParentData] = useState(null);
+
+  function handleBackButton() {
+    navigate(`/protocol/${id}`);
+  }
 
   useEffect(() => {
     if (!id) return;
@@ -59,6 +64,7 @@ export default function EditProtocol() {
 
       alert("Zaktualizowano datę wizyty");
       setProtocol((prev) => ({ ...prev, scheduled_at: selectedDate }));
+      navigate(`/protocol/${id}`);
     } catch (err) {
       console.error(err);
       alert("Błąd: " + err.message);
@@ -88,6 +94,7 @@ export default function EditProtocol() {
 
   return (
     <div>
+      <button onClick={handleBackButton}>cofnij</button>
       <h1 className="font-bold text-2xl text-stone-500">
         {protocol.ticket_number}
       </h1>

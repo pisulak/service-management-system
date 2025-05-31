@@ -273,10 +273,51 @@ exports.getProtocolBasedOnID = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT tickets.*, companies.address, companies.company_name, companies.nip, companies.phone_number, companies.join_date, companies.priority
-        FROM tickets
-        JOIN companies ON tickets.client_id = companies.user_id
-        WHERE tickets.id = $1;`,
+      `SELECT
+  t.*,
+  c.address,
+  c.company_name,
+  c.nip,
+  c.phone_number,
+  c.join_date,
+  c.priority,
+
+  (
+    SELECT 
+      json_agg(
+        json_build_object(
+          'work_date',    ws.work_date,
+          'start_time',   ws.start_time,
+          'end_time',     ws.end_time,
+          'duration',     ws.duration
+        ) ORDER BY ws.work_date
+      )
+    FROM work_sessions ws
+    WHERE ws.ticket_id = t.id
+  ) AS work_sessions,
+
+  (
+    SELECT
+      json_agg(
+        json_build_object(
+          'part_id',       up.part_id,
+          'quantity_used', up.quantity_used,
+          'code',          p.code,
+          'product',       p.product,
+          'price',         p.price
+        ) ORDER BY p.product
+      )
+    FROM used_parts up
+    JOIN parts p ON up.part_id = p.id
+    WHERE up.ticket_id = t.id
+  ) AS used_parts
+
+FROM tickets t
+JOIN companies c
+  ON t.client_id = c.user_id
+WHERE t.id = $1
+;
+`,
       [id]
     );
 
@@ -296,7 +337,7 @@ exports.getProtocolBasedOnID = async (req, res) => {
 exports.editScheduledDate = async (req, res) => {
   const user = req.session.user;
 
-  if (!user) {
+  if (!user || user.role !== "admin") {
     return res.status(403).json({ message: "Brak dostępu" });
   }
 
@@ -312,7 +353,7 @@ exports.editScheduledDate = async (req, res) => {
       `UPDATE tickets
        SET
          scheduled_at = $1 ,
-         status = 'submitted'
+         status = 'scheduled'
        WHERE id = $2
        RETURNING *;`,
       [scheduledDate, id]
@@ -328,5 +369,177 @@ exports.editScheduledDate = async (req, res) => {
   } catch (err) {
     console.error("Błąd aktualizacji zgłoszenia:", err);
     res.status(500).json({ message: "Błąd serwera" });
+  }
+};
+
+// -----------------------------------------
+
+exports.handleCloseProtocol = async (req, res) => {
+  const user = req.session.user;
+  if (!user || user.role !== "admin") {
+    return res.status(403).json({ message: "Brak dostępu" });
+  }
+
+  const { id } = req.params;
+  const { closedDate, workSessions, usedParts } = req.body;
+
+  if (!closedDate) {
+    return res
+      .status(400)
+      .json({ message: "Brak daty zamknięcia (closedDate)" });
+  }
+  if (
+    typeof closedDate !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(closedDate)
+  ) {
+    return res
+      .status(400)
+      .json({ message: "closedDate powinno być w formacie YYYY-MM-DD" });
+  }
+
+  const sessions = Array.isArray(workSessions) ? workSessions : [];
+  const parts = Array.isArray(usedParts) ? usedParts : [];
+
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+
+    const updateTicketQuery = `
+        UPDATE tickets
+        SET
+          closed_at = $1,
+          status = 'closed'
+        WHERE id = $2
+        RETURNING *;
+      `;
+    const ticketResult = await client.query(updateTicketQuery, [
+      closedDate,
+      id,
+    ]);
+    if (ticketResult.rowCount === 0) {
+      await client.query("ROLLBACK");
+      return res
+        .status(404)
+        .json({ message: "Nie znaleziono zgłoszenia lub już zamknięte" });
+    }
+
+    if (sessions.length > 0) {
+      for (const ws of sessions) {
+        if (
+          typeof ws.work_date !== "string" ||
+          !/^\d{4}-\d{2}-\d{2}$/.test(ws.work_date) ||
+          typeof ws.start_time !== "string" ||
+          !/^\d{2}:\d{2}$/.test(ws.start_time) ||
+          typeof ws.end_time !== "string" ||
+          !/^\d{2}:\d{2}$/.test(ws.end_time) ||
+          typeof ws.duration !== "number"
+        ) {
+          await client.query("ROLLBACK");
+          return res.status(400).json({
+            message:
+              "Błędny format workSessions – każdy entry musi mieć work_date: YYYY-MM-DD, start_time: HH:MM, end_time: HH:MM, duration: liczba",
+          });
+        }
+      }
+
+      const existingDatesRes = await client.query(
+        `SELECT work_date FROM work_sessions WHERE ticket_id = $1;`,
+        [id]
+      );
+      const existingDates = new Set(
+        existingDatesRes.rows.map((r) => r.work_date)
+      );
+
+      const sessionsToInsert = sessions.filter(
+        (s) => !existingDates.has(s.work_date)
+      );
+
+      if (sessionsToInsert.length > 0) {
+        const wsValues = [];
+        const wsPlaceholders = sessionsToInsert
+          .map((s, idx) => {
+            const base = idx * 5;
+            wsValues.push(
+              id,
+              s.work_date,
+              s.start_time,
+              s.end_time,
+              s.duration
+            );
+            return `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${
+              base + 5
+            })`;
+          })
+          .join(", ");
+
+        const insertWorkSessionsQuery = `
+            INSERT INTO work_sessions (ticket_id, work_date, start_time, end_time, duration)
+            VALUES ${wsPlaceholders};
+          `;
+        await client.query(insertWorkSessionsQuery, wsValues);
+      }
+    }
+
+    if (parts.length > 0) {
+      for (const up of parts) {
+        if (
+          typeof up.part_id !== "number" ||
+          typeof up.quantity_used !== "number" ||
+          up.quantity_used <= 0
+        ) {
+          await client.query("ROLLBACK");
+          return res.status(400).json({
+            message:
+              "Błędny format usedParts – każdy entry musi mieć part_id: liczba, quantity_used: liczba > 0",
+          });
+        }
+      }
+
+      const upValues = [];
+      const upPlaceholders = parts
+        .map((item, idx) => {
+          const base = idx * 3;
+          upValues.push(id, item.part_id, item.quantity_used);
+          return `($${base + 1}, $${base + 2}, $${base + 3})`;
+        })
+        .join(", ");
+
+      const insertUsedPartsQuery = `
+          INSERT INTO used_parts (ticket_id, part_id, quantity_used)
+          VALUES ${upPlaceholders};
+        `;
+      await client.query(insertUsedPartsQuery, upValues);
+
+      for (const item of parts) {
+        const updatePartQuantityQuery = `
+            UPDATE parts
+            SET quantity = quantity - $1
+            WHERE id = $2
+              AND quantity >= $1
+          `;
+        const updateRes = await client.query(updatePartQuantityQuery, [
+          item.quantity_used,
+          item.part_id,
+        ]);
+        if (updateRes.rowCount === 0) {
+          await client.query("ROLLBACK");
+          return res.status(400).json({
+            message: `Brak wystarczającej ilości części o ID = ${item.part_id}`,
+          });
+        }
+      }
+    }
+
+    await client.query("COMMIT");
+    return res.json({
+      message: "Zamknięto zgłoszenie oraz dodano sesje i części",
+      ticket: ticketResult.rows[0],
+    });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    console.error("Błąd podczas zamykania protokołu:", err);
+    return res.status(500).json({ message: "Błąd serwera: " + err.message });
+  } finally {
+    client.release();
   }
 };

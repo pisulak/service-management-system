@@ -21,6 +21,7 @@ import Storage from "../features/admin/storage/StoragePage.jsx";
 import Clients from "../features/admin/clients/ClientsPage.jsx";
 import ViewProtocol from "../features/admin/protocols/ViewProtocol.jsx";
 import EditProtocol from "../features/admin/protocols/EditProtocol.jsx";
+import CloseProtocol from "../features/admin/protocols/CloseProtocol.jsx";
 
 // Client pages
 import ClientDashboard from "../features/client/dashboard/ClientDashboardPage.jsx";
@@ -86,6 +87,15 @@ export default function AppRoutes() {
           element={
             <PrivateRoute allowedRoles={["admin"]}>
               <EditProtocol />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/closeProtocol/:id"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <CloseProtocol />
             </PrivateRoute>
           }
         />

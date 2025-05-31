@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   Protocol,
   Warranty,
@@ -10,14 +10,17 @@ import { High, Medium, Low } from "../../../components/icons/PriorityIcons";
 
 export default function ViewProtocol() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [protocol, setProtocol] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [parentData, setParentData] = useState(null);
 
-  useEffect(() => {
-    if (!id) return;
+  function handleBackButton() {
+    navigate(`/dashboard`);
+  }
 
+  useEffect(() => {
     const fetchProtocol = async () => {
       setLoading(true);
       setError(null);
@@ -35,34 +38,46 @@ export default function ViewProtocol() {
       }
     };
 
-    fetchProtocol();
+    if (id) {
+      fetchProtocol();
+    }
   }, [id]);
 
   useEffect(() => {
-    if (!protocol?.parent_ticket_id) return;
-
     const fetchParentProtocol = async () => {
-      try {
-        const res = await fetch(`/api/protocols/${protocol.parent_ticket_id}`, {
-          credentials: "include",
-        });
+      if (protocol && protocol.parent_ticket_id) {
+        try {
+          const res = await fetch(
+            `/api/protocols/${protocol.parent_ticket_id}`,
+            {
+              credentials: "include",
+            }
+          );
 
-        if (!res.ok) throw new Error("Błąd pobierania powiązanego zgłoszenia");
-        const data = await res.json();
-        setParentData(data);
-      } catch (err) {
-        console.error(err);
+          if (!res.ok)
+            throw new Error("Błąd pobierania powiązanego zgłoszenia");
+          const data = await res.json();
+          setParentData(data);
+        } catch (err) {
+          console.error(err);
+        }
       }
     };
 
     fetchParentProtocol();
-  }, [protocol?.parent_ticket_id]);
+  }, [protocol]);
 
   const formatDate = (isoString) => {
     if (!isoString) return "";
     const d = new Date(isoString);
     if (isNaN(d)) return "";
     return d.toLocaleDateString("pl-PL");
+  };
+
+  const formatTime = (timeString) => {
+    if (!timeString) return "";
+    const parts = timeString.split(":");
+    return parts.slice(0, 2).join(":");
   };
 
   if (loading) return <div>Ładowanie protokołu...</div>;
@@ -82,6 +97,7 @@ export default function ViewProtocol() {
 
   return (
     <div>
+      <button onClick={handleBackButton}>cofnij</button>
       <h1 className="font-bold text-2xl text-stone-500">
         {protocol.ticket_number}
       </h1>
@@ -103,6 +119,7 @@ export default function ViewProtocol() {
 
       <div className="mx-4">
         <p className="mb-4 font-light">{protocol.description}</p>
+
         {protocol.has_device && (
           <div className="flex gap-2">
             <Device />
@@ -115,12 +132,12 @@ export default function ViewProtocol() {
           created: {formatDate(protocol.created_at)}
         </div>
 
-        {protocol.scheduled_at !== null && (
+        {protocol.scheduled_at && (
           <div className="font-semibold">
             scheduled: {formatDate(protocol.scheduled_at)}
           </div>
         )}
-        {protocol.closed_at !== null && (
+        {protocol.closed_at && (
           <div className="font-semibold">
             closed: {formatDate(protocol.closed_at)}
           </div>
@@ -146,7 +163,7 @@ export default function ViewProtocol() {
         </div>
 
         {protocol.parent_ticket_id && parentData && (
-          <div className="flex gap-2 group hover:text-blue-700 underline">
+          <div className="flex gap-2 group hover:text-blue-700 underline mt-2">
             <Protocol />
             <Link
               to={`/protocol/${protocol.parent_ticket_id}`}
@@ -166,18 +183,67 @@ export default function ViewProtocol() {
         <span className="mx-4 font-extralight">distance</span>
       </div>
 
-      {protocol.closed_at === null && (
-        <Link to={`/editProtocol/${id}`} state={{ protocol: { id: id } }}>
+      {protocol.work_sessions && protocol.work_sessions.length > 0 && (
+        <div className="mt-6">
+          <h3 className="font-semibold text-lg mb-2">Sesje robocze</h3>
+          <div className="space-y-2">
+            {protocol.work_sessions.map((ws, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-4 border p-2 rounded bg-gray-50"
+              >
+                <div className="w-32 font-medium">
+                  {formatDate(ws.work_date)}
+                </div>
+                <div className="w-24 text-center">
+                  {formatTime(ws.start_time)} – {formatTime(ws.end_time)}
+                </div>
+                <div className="ml-4 w-16 font-medium">{ws.duration} h</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {protocol.used_parts && protocol.used_parts.length > 0 && (
+        <div className="mt-6">
+          <h3 className="font-semibold text-lg mb-2">Użyte części</h3>
+          <div className="space-y-2">
+            {protocol.used_parts.map((part, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-4 border p-2 rounded bg-gray-50"
+              >
+                <div className="w-48 font-medium">{part.product}</div>
+                <div className="w-24 text-center">
+                  {part.quantity_used} × {part.code}
+                </div>
+                <div className="ml-auto font-medium">{part.price} zł</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {protocol.status === "submitted" ? (
+        <Link to={`/editProtocol/${id}`} state={{ protocol: { id } }}>
           <button
             className="mt-3 px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
             type="button"
           >
-            {protocol.scheduled_at === null
-              ? "Zaplanuj wizytę"
-              : "Zamknij zgłoszenie"}
+            Zaplanuj wizytę
           </button>
         </Link>
-      )}
+      ) : protocol.status === "scheduled" ? (
+        <Link to={`/closeProtocol/${id}`} state={{ protocol: { id } }}>
+          <button
+            className="mt-3 px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
+            type="button"
+          >
+            Zamknij zgłoszenie
+          </button>
+        </Link>
+      ) : null}
     </div>
   );
 }
