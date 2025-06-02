@@ -10,6 +10,8 @@ import { useAuth } from "../hooks/useAuth.js";
 import Login from "../auth/LoginPage.jsx";
 import Register from "../auth/RegisterPage.jsx";
 import RegisterCompanyPage from "../auth/RegisterCompanyPage.jsx";
+import EditProfile from "../components/common/EditProfile.jsx";
+import EditCompany from "../components/common/EditCompany.jsx";
 import NotFound from "./NotFound.jsx";
 
 // Admin pages
@@ -60,6 +62,24 @@ export default function AppRoutes() {
           element={
             <PrivateRoute allowedRoles={["client"]}>
               <RegisterCompanyPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/editProfile"
+          element={
+            <PrivateRoute allowedRoles={["client", "admin"]}>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/editCompany"
+          element={
+            <PrivateRoute allowedRoles={["client", "admin"]}>
+              <EditCompany />
             </PrivateRoute>
           }
         />
