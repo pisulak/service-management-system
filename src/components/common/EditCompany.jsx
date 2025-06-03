@@ -13,6 +13,10 @@ export default function EditCompany() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  function handleBackButton() {
+    navigate(-1);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -69,70 +73,73 @@ export default function EditCompany() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border border-gray-300 rounded-xl shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Edytuj dane firmy</h2>
-      {error && <div className="text-red-600 mb-3">{error}</div>}
-      {message && <div className="text-green-600 mb-3">{message}</div>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1 font-medium">
-            Nazwa firmy (opcjonalnie)
-          </label>
+    <div>
+      <button
+        className="absolute top-16 left-20 mb-8 px-5 py-1.5 cursor-pointer bg-white text-gray-600 border border-gray-600 rounded-xl hover:bg-gray-100 hover:text-gray-800 hover:border-gray-900 hover:duration-300"
+        onClick={handleBackButton}
+      >
+        Cofnij
+      </button>
+
+      <div className="mt-32 flex justify-center">
+        {error && <div className="text-red-600 mb-3">{error}</div>}
+        {message && <div className="text-green-600 mb-3">{message}</div>}
+        <form
+          onSubmit={handleSubmit}
+          className="fixed grid grid-cols-1 w-1/3 px-5 py-10 text-center rounded-[30px] bg-white shadow-[0px_0px_20px_0px_rgba(0,0,0,0.2)]"
+        >
+          <h2 className="mb-4 text-3xl font-bold">Edytuj dane firmy</h2>
+
           <input
+            className="w-2/3 justify-self-center mt-2.5 p-2.5 border-0 rounded-xl bg-gray-200"
             type="text"
             value={companyName}
+            placeholder="Nazwa firmy"
             onChange={(e) => setCompanyName(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
           />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Adres (opcjonalnie)</label>
+
           <input
             type="text"
+            className="w-2/3 justify-self-center mt-2.5 p-2.5 border-0 rounded-xl bg-gray-200"
             value={address}
+            placeholder="Adres firmy"
             onChange={(e) => setAddress(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
           />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">NIP (opcjonalnie)</label>
+
           <input
             type="text"
+            className="w-2/3 justify-self-center mt-2.5 p-2.5 border-0 rounded-xl bg-gray-200"
             value={nip}
+            placeholder="NIP"
             onChange={(e) => setNip(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
           />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">
-            Numer telefonu (opcjonalnie)
-          </label>
+
           <input
             type="text"
+            className="w-2/3 justify-self-center mt-2.5 p-2.5 border-0 rounded-xl bg-gray-200"
             value={phoneNumber}
+            placeholder="Numer telefonu"
             onChange={(e) => setPhoneNumber(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
           />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium">Hasło (wymagane)</label>
+
           <input
             type="password"
+            className="w-2/3 justify-self-center mt-2.5 p-2.5 border-0 rounded-xl bg-gray-200"
             value={password}
+            placeholder="Hasło - wymagane"
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
             required
           />
-        </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md"
-          disabled={loading}
-        >
-          {loading ? "Aktualizowanie..." : "Zapisz zmiany"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="justify-self-center w-1/3 mt-6 px-5 py-1.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
+            disabled={loading}
+          >
+            Zapisz zmiany
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

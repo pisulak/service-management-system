@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Calendar } from "../icons/ProtocolIcons.jsx";
 
 export default function DateInput({ value, onChange }) {
   const [inputValue, setInputValue] = useState("");
@@ -48,15 +49,15 @@ export default function DateInput({ value, onChange }) {
         placeholder="DD/MM/YYYY"
         value={inputValue}
         onChange={handleInputChange}
-        className="border p-2 w-full rounded"
+        className="p-2.5 border-0 rounded-2xl bg-gray-200"
       />
 
       <button
         type="button"
         onClick={() => setShowCalendar((prev) => !prev)}
-        className="absolute top-2 right-2 bg-gray-200 px-2 rounded"
+        className="absolute top-2 right-8"
       >
-        📅
+        <Calendar />
       </button>
 
       {showCalendar && (

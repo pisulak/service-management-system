@@ -18,8 +18,8 @@ export default function Topbar() {
 
   const menuItems = [
     { icon: Notification, label: "Powiadomienia", href: "#" },
-    { icon: Profile, label: "Profil", href: "/editProfile" },
-    { icon: UserSettings, label: "Ustawienia", href: "/editCompany" },
+    { icon: Profile, label: "Edytuj profil", href: "/editProfile" },
+    { icon: UserSettings, label: "Edytuj dane firmy", href: "/editCompany" },
     { icon: Logout, label: "Wyloguj", action: "logout" },
   ];
 

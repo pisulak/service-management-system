@@ -16,6 +16,10 @@ export default function ClientAddProtocolPage() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  function handleBackButton() {
+    navigate(-1);
+  }
+
   useEffect(() => {
     if (isAppeal) {
       fetch("/api/protocols/clientClosed", { credentials: "include" })
@@ -57,101 +61,114 @@ export default function ClientAddProtocolPage() {
   };
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      <h1 className="text-xl font-bold mb-4">Dodaj nowy protokół</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Tytuł"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-2 border rounded"
-          required
-        />
+    <div>
+      <button
+        className="absolute top-16 left-20 mb-8 px-5 py-1.5 cursor-pointer bg-white text-gray-600 border border-gray-600 rounded-xl hover:bg-gray-100 hover:text-gray-800 hover:border-gray-900 hover:duration-300"
+        onClick={handleBackButton}
+      >
+        Cofnij
+      </button>
 
-        <textarea
-          placeholder="Opis"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full p-2 border rounded"
-          required
-        />
-
-        <select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          className="w-full p-2 border rounded"
+      <div className="mt-32 flex justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="fixed grid grid-cols-1 w-1/3 px-5 py-10 text-center rounded-[30px] bg-white shadow-[0px_0px_20px_0px_rgba(0,0,0,0.2)]"
         >
-          <option value="awaria">Awaria</option>
-          <option value="montaz">Montaż</option>
-        </select>
-
-        <label className="block">
+          <h1 className="mb-4 text-3xl font-bold">Dodaj nowy protokół</h1>
           <input
-            type="checkbox"
-            checked={hasDevice}
-            onChange={(e) => setHasDevice(e.target.checked)}
-          />
-          <span className="ml-2">Dotyczy urzędzenia</span>
-        </label>
-
-        {hasDevice && (
-          <input
+            className="mt-2.5 p-2.5 border-0 rounded-2xl bg-gray-200"
             type="text"
-            placeholder="Nazwa urządzenia"
-            value={deviceName}
-            onChange={(e) => setDeviceName(e.target.value)}
-            className="w-full p-2 border rounded"
-          />
-        )}
-
-        <label className="block">
-          <input
-            type="checkbox"
-            checked={isWarranty}
-            onChange={(e) => setIsWarranty(e.target.checked)}
-          />
-          <span className="ml-2">Gwarancja</span>
-        </label>
-
-        <label className="block mt-4">
-          <input
-            type="checkbox"
-            checked={isAppeal}
-            onChange={(e) => setIsAppeal(e.target.checked)}
-          />
-          <span className="ml-2 font-semibold">Czy jest to odwołanie?</span>
-        </label>
-
-        {isAppeal && (
-          <select
-            value={parentTicketId}
-            onChange={(e) => setParentTicketId(e.target.value)}
-            className="w-full p-2 border rounded"
+            placeholder="Tytuł"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
+          />
+
+          <textarea
+            className="mt-2.5 p-2.5 border-0 rounded-2xl bg-gray-200 resize-none"
+            placeholder="Opis"
+            value={description}
+            rows={3}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+
+          <select
+            className="justify-self-start w-2/3 my-2.5 p-2.5 border-0 rounded-xl bg-gray-200"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
           >
-            <option value="">Wybierz zamknięty protokół</option>
-            {closedProtocols.length === 0 && (
-              <option disabled>Brak zamkniętych protokołów</option>
-            )}
-            {closedProtocols.map((protocol) => (
-              <option key={protocol.id} value={protocol.id}>
-                {protocol.ticket_number} - {protocol.title}
-              </option>
-            ))}
+            <option value="awaria">Awaria</option>
+            <option value="montaz">Montaż</option>
           </select>
-        )}
 
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded mt-4"
-        >
-          Wyślij protokół
-        </button>
+          <label className="justify-self-start ">
+            <input
+              type="checkbox"
+              checked={hasDevice}
+              onChange={(e) => setHasDevice(e.target.checked)}
+            />
+            <span className="ml-2">Dotyczy urzędzenia</span>
+          </label>
 
-        {success && <p className="text-green-600">{success}</p>}
-        {error && <p className="text-red-600">{error}</p>}
-      </form>
+          {hasDevice && (
+            <input
+              className="w-2/3 justify-self-start mt-2.5 p-2.5 border-0 rounded-xl bg-gray-200"
+              type="text"
+              placeholder="Nazwa urządzenia"
+              value={deviceName}
+              onChange={(e) => setDeviceName(e.target.value)}
+            />
+          )}
+
+          <label className="justify-self-start my-4">
+            <input
+              type="checkbox"
+              checked={isWarranty}
+              onChange={(e) => setIsWarranty(e.target.checked)}
+            />
+            <span className="ml-2">Gwarancja</span>
+          </label>
+
+          <label className="justify-self-start">
+            <input
+              type="checkbox"
+              checked={isAppeal}
+              onChange={(e) => setIsAppeal(e.target.checked)}
+            />
+            <span className="ml-2 font-semibold">Czy jest to odwołanie?</span>
+          </label>
+
+          {isAppeal && (
+            <select
+              className="justify-self-start w-2/3 my-2.5 p-2.5 border-0 rounded-xl bg-gray-200"
+              value={parentTicketId}
+              onChange={(e) => setParentTicketId(e.target.value)}
+              required
+            >
+              <option value="">Wybierz zamknięty protokół</option>
+              {closedProtocols.length === 0 && (
+                <option disabled>Brak zamkniętych protokołów</option>
+              )}
+              {closedProtocols.map((protocol) => (
+                <option key={protocol.id} value={protocol.id}>
+                  {protocol.ticket_number} - {protocol.title}
+                </option>
+              ))}
+            </select>
+          )}
+
+          <button
+            type="submit"
+            className="justify-self-center w-1/3 mt-6 px-5 py-1.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
+          >
+            Wyślij protokół
+          </button>
+
+          {success && <p className="text-green-600">{success}</p>}
+          {error && <p className="text-red-600">{error}</p>}
+        </form>
+      </div>
     </div>
   );
 }
