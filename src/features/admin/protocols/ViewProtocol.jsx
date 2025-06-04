@@ -7,6 +7,7 @@ import {
   Device,
 } from "../../../components/icons/ProtocolIcons";
 import { High, Medium, Low } from "../../../components/icons/PriorityIcons";
+import { generateProtocolPDF } from "./ProtocolPDF";
 
 export default function ViewProtocol() {
   const { id } = useParams();
@@ -249,7 +250,7 @@ export default function ViewProtocol() {
                       {up.quantity_used} x {up.product}
                     </div>
                     <div className="text-right font-medium">
-                      {(up.price / 100).toFixed(2)} zł
+                      {up.quantity_used} x {(up.price / 100).toFixed(2)} zł
                     </div>
                   </div>
                 ))}
@@ -280,6 +281,7 @@ export default function ViewProtocol() {
               <button
                 className="mt-6 px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
                 type="button"
+                onClick={() => generateProtocolPDF(protocol)}
               >
                 Generuj PDF
               </button>
