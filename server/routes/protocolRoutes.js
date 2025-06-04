@@ -13,6 +13,7 @@ const {
   getProtocolBasedOnID,
   editScheduledDate,
   handleCloseProtocol,
+  getTicketsByUserID,
 } = require("../controllers/protocolController");
 
 router.post("/create", createProtocol);
@@ -25,6 +26,7 @@ router.get("/adminToday", getTodayProtocols);
 router.get("/adminSubmitted", getSubmittedProtocols);
 router.get("/adminScheduled", getScheduledProtocols);
 router.get("/adminClosed", getClosedProtocols);
+router.get("/adminClientTickets/:id", getTicketsByUserID);
 
 router.get("/:id", getProtocolBasedOnID);
 router.put("/schedule/:id", editScheduledDate);

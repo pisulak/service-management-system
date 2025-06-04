@@ -543,3 +543,37 @@ exports.handleCloseProtocol = async (req, res) => {
     client.release();
   }
 };
+
+exports.getTicketsByUserID = async (req, res) => {
+  const user = req.session.user;
+
+  if (!user) {
+    return res.status(403).json({ message: "Brak dostępu" });
+  }
+
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      `
+      SELECT
+        t.*
+      FROM tickets t
+      WHERE t.client_id = $1
+      ORDER BY t.created_at DESC
+      `,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Brak zgłoszeń dla tego użytkownika" });
+    }
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Błąd pobierania zgłoszeń użytkownika:", err);
+    res.status(500).json({ message: "Błąd serwera" });
+  }
+};

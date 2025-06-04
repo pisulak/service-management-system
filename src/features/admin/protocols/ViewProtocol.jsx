@@ -17,7 +17,7 @@ export default function ViewProtocol() {
   const [parentData, setParentData] = useState(null);
 
   function handleBackButton() {
-    navigate(`/dashboard`);
+    navigate(-1);
   }
 
   useEffect(() => {
@@ -152,7 +152,7 @@ export default function ViewProtocol() {
                 <div className="flex gap-2 group hover:text-blue-700 underline mt-2">
                   <Protocol />
                   <Link
-                    to={`/clientProtocol/${protocol.parent_ticket_id}`}
+                    to={`/protocol/${protocol.parent_ticket_id}`}
                     state={{ protocol: parentData }}
                   >
                     Powiązane zgłoszenie:{" "}
@@ -222,10 +222,10 @@ export default function ViewProtocol() {
                     <div className="w-32 font-medium">
                       {formatDate(ws.work_date)}
                     </div>
-                    <div className="w-24 text-center">
+                    <div className="w-32 text-center">
                       {formatTime(ws.start_time)} – {formatTime(ws.end_time)}
                     </div>
-                    <div className="ml-4 w-16 text-right font-medium">
+                    <div className="w-24 text-right font-medium">
                       {Math.floor(ws.duration / 60)} h {ws.duration % 60} min
                     </div>
                   </div>
@@ -275,7 +275,16 @@ export default function ViewProtocol() {
                 Zamknij zgłoszenie
               </button>
             </Link>
-          ) : null}
+          ) : (
+            <div>
+              <button
+                className="mt-6 px-5 py-2.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
+                type="button"
+              >
+                Generuj PDF
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

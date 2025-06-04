@@ -1,8 +1,10 @@
 import { Company } from "../../../components/icons/MenuIcons";
 import { High, Medium, Low } from "../../../components/icons/PriorityIcons";
+import { Link } from "react-router-dom";
 
 export default function ClientItem({
   index,
+  id,
   company,
   date,
   tickets,
@@ -36,8 +38,8 @@ export default function ClientItem({
       <span className="flex gap-2">
         {priorityIcon} {priority}
       </span>
-      <a
-        href="#"
+      <Link
+        to={`/clientDetails/${id}`}
         className={`justify-self-end w-fit px-7 py-1 rounded-xl cursor-pointer hover:duration-300 ${
           isEven
             ? "bg-blue-100 text-blue-800 hover:bg-blue-200 hover:text-blue-900"
@@ -45,7 +47,7 @@ export default function ClientItem({
         }`}
       >
         Zlecenia
-      </a>
+      </Link>
     </div>
   );
 }

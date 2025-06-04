@@ -30,6 +30,7 @@ export default function ClientList() {
         const data = await res.json();
 
         const formatted = data.map((item) => ({
+          id: item.id,
           company: item.company_name,
           date: new Date(item.join_date).toLocaleDateString("pl-PL"),
           tickets: item.ticket_count,
@@ -64,6 +65,7 @@ export default function ClientList() {
           <ClientItem
             key={index}
             index={index}
+            id={item.id}
             company={item.company}
             date={item.date}
             tickets={item.tickets}

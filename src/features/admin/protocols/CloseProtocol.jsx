@@ -306,7 +306,7 @@ export default function CloseProtocol() {
                 <div className="flex gap-2 group hover:text-blue-700 underline mt-2">
                   <Protocol />
                   <Link
-                    to={`/clientProtocol/${protocol.parent_ticket_id}`}
+                    to={`/protocol/${protocol.parent_ticket_id}`}
                     state={{ protocol: parentData }}
                   >
                     Powiązane zgłoszenie:{" "}

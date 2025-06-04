@@ -28,3 +28,36 @@ exports.getClientList = async (req, res) => {
     res.status(500).json({ message: "Błąd serwera" });
   }
 };
+
+exports.getCompanyAndUserEmailByCompanyID = async (req, res) => {
+  const user = req.session.user;
+
+  if (!user || user.role !== "admin") {
+    return res.status(403).json({ message: "Brak dostępu" });
+  }
+
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT
+        c.*,
+        u.email AS user_email
+        FROM companies c
+        JOIN users u ON c.user_id = u.id
+        WHERE c.id = $1;`,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Nie znaleziono firmy dla podanego ID" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Błąd pobierania firmy i emaila:", err);
+    res.status(500).json({ message: "Błąd serwera" });
+  }
+};
