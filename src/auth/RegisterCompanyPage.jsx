@@ -80,7 +80,7 @@ export default function RegisterCompanyPage() {
           className="mb-8 px-5 py-1.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
           type="submit"
         >
-          Zarejestruj firmę
+          Zpisz dane firmy
         </button>
       </form>
     </div>

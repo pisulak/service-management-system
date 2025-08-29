@@ -12,7 +12,6 @@ export default function ClientDashboardPage() {
 
       <div className="w-full">
         <Topbar />
-        <StatsPanel />
 
         <div className="grid grid-cols-2 gap-12 mt-10 mx-16 font-extrabold text-3xl">
           <div className="mx-1">Na dzisiaj</div>
@@ -21,7 +20,7 @@ export default function ClientDashboardPage() {
         <div className="grid grid-cols-[3fr_1fr] gap-12 h-[calc(100vh-420px)] gap-12 mx-11">
           <TodayProtocols />
 
-          <div className="relative group justify-self-end self-end mx-10">
+          {/* <div className="relative group justify-self-end self-end mx-10">
             <a href="/clientAddProtocol">
               <button className="p-5 bg-white cursor-pointer text-gray-600 border border-gray-600 rounded-xl hover:bg-gray-200 hover:text-gray-900 hover:border-gray-900 hover:duration-300">
                 <FilePlus />
@@ -31,7 +30,7 @@ export default function ClientDashboardPage() {
               Zgłoś awarię
               <div className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-gray-700" />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

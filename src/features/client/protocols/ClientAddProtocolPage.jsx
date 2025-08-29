@@ -74,7 +74,7 @@ export default function ClientAddProtocolPage() {
           onSubmit={handleSubmit}
           className="fixed grid grid-cols-1 w-1/3 px-5 py-10 text-center rounded-[30px] bg-white shadow-[0px_0px_20px_0px_rgba(0,0,0,0.2)]"
         >
-          <h1 className="mb-4 text-3xl font-bold">Dodaj nowy protokół</h1>
+          <h1 className="mb-4 text-3xl font-bold">Wyślij nowe zgłoszenie</h1>
           <input
             className="mt-2.5 p-2.5 border-0 rounded-2xl bg-gray-200"
             type="text"
@@ -136,7 +136,7 @@ export default function ClientAddProtocolPage() {
               checked={isAppeal}
               onChange={(e) => setIsAppeal(e.target.checked)}
             />
-            <span className="ml-2 font-semibold">Czy jest to odwołanie?</span>
+            <span className="ml-2 ">Czy jest to odwołanie?</span>
           </label>
 
           {isAppeal && (
@@ -160,9 +160,9 @@ export default function ClientAddProtocolPage() {
 
           <button
             type="submit"
-            className="justify-self-center w-1/3 mt-6 px-5 py-1.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
+            className="justify-self-center w-1/3 mt-6 px-4 py-1.5 cursor-pointer text-gray-400 border border-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 hover:border-gray-700 hover:duration-300"
           >
-            Wyślij protokół
+            Wyślij zgłoszenie
           </button>
 
           {success && <p className="text-green-600">{success}</p>}

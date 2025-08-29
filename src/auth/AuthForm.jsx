@@ -55,7 +55,7 @@ export default function AuthForm({
             className="ml-1 text-blue-500 cursor-pointer hover:underline hover:text-blue-700"
             onClick={onFooterClick}
           >
-            {title === "Login" ? "Zarejestruj się!" : "Zaloguj się!"}
+            {title === "Logowanie" ? "Zarejestruj się!" : "Zaloguj się!"}
           </span>
         </p>
       )}

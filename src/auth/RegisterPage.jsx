@@ -17,7 +17,7 @@ export default function RegisterPage() {
   return (
     <div className="flex justify-center items-center h-[70vh]">
       <AuthForm
-        title="Register"
+        title="Rejestracja"
         email={email}
         setEmail={setEmail}
         password={password}

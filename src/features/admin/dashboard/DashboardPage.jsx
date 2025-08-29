@@ -12,7 +12,6 @@ export default function DashboardPage() {
 
       <div className="w-full">
         <Topbar />
-        <StatPanel />
 
         <div className="grid grid-cols-2 gap-12 mt-10 mx-16 font-extrabold text-3xl">
           <div className="mx-1">Na dzisiaj</div>

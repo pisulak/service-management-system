@@ -17,7 +17,6 @@ export default function Topbar() {
   const Logo = Company;
 
   const menuItems = [
-    { icon: Notification, label: "Powiadomienia", href: "#" },
     { icon: Profile, label: "Edytuj profil", href: "/editProfile" },
     { icon: UserSettings, label: "Edytuj dane firmy", href: "/editCompany" },
     { icon: Logout, label: "Wyloguj", action: "logout" },

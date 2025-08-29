@@ -10,7 +10,7 @@ export default function LoginPage() {
   return (
     <div className="flex justify-center items-center h-[70vh]">
       <AuthForm
-        title="Login"
+        title="Logowanie"
         email={email}
         setEmail={setEmail}
         password={password}
